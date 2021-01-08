@@ -31,21 +31,21 @@ python test.py
 
 ## TODO
 * 2D
-    - [*] unet
-    - [*] unet++
-    - [*] miniseg
-    - [*] segnet
-    - [*] pspnet
-    - [*] highresnet
-    - [*] deeplab
-    - [*] fcn
+    - [x] unet
+    - [x] unet++
+    - [x] miniseg
+    - [x] segnet
+    - [x] pspnet
+    - [x] highresnet
+    - [x] deeplab
+    - [x] fcn
 * 3D
-    - [*] unet3d
-    - [*] densevoxelnet3d
-    - [*] fcn3d
-    - [*] vnet3d
-    - [*] highresnert
-    - [*] densenet3d
+    - [x] unet3d
+    - [x] densevoxelnet3d
+    - [x] fcn3d
+    - [x] vnet3d
+    - [x] highresnert
+    - [x] densenet3d
 
 
 ## Acknowledgements
