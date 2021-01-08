@@ -1,3 +1,6 @@
+# Pytorch Medical Segmentation
+<i>Read Chinese Introduction：<a href='https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/master/README-zh.md'>Here！</a></i><br />
+
 ## Recent Updates
 * 2021.1.8 The train and test codes are released.
 
@@ -7,8 +10,9 @@
 * python>=3.6
 
 ## Notice
-* You can modify **config.py** to determine whether 2D or 3D segmentation and whether multicategorization is possible.
+* You can modify **hparam.py** to determine whether 2D or 3D segmentation and whether multicategorization is possible.
 * We provide backbone networks for almost all 2D and 3D segmentation.
+* This repository is compatible with all medical data formats, by modifying **fold_arch** in **hparam.py** of the config.
 
 
 
@@ -27,6 +31,10 @@ python train.py -k True
 ```
 python test.py
 ```
+
+## Examples
+![](https://ellis.oss-cn-beijing.aliyuncs.com/img/20210108180425.png)
+
 
 
 ## TODO
@@ -47,6 +55,9 @@ python test.py
     - [x] highresnert
     - [x] densenet3d
 
+## By The Way
+This project is not perfect and there are still many problems. If you are using this project and would like to give the author some feedback, you can send [Kangneng Zhou](elliszkn@163.com) an email or contact him to join a wechat group via scan:
+![](https://ellis.oss-cn-beijing.aliyuncs.com/img/20210108151444.png)
 
 ## Acknowledgements
-This repository is an unoffical PyTorch implementation of Medical segmentation in 3D and 2D and highly based on [MedicalZooPytorch](https://github.com/black0017/MedicalZooPytorch) and [torchio](https://github.com/fepegar/torchio).Thank you for the above repo. Thank you to [Cheng Chen](b20170310@xs.ustb.edu.cn) for all the help I received.
+This repository is an unoffical PyTorch implementation of Medical segmentation in 3D and 2D and highly based on [MedicalZooPytorch](https://github.com/black0017/MedicalZooPytorch) and [torchio](https://github.com/fepegar/torchio).Thank you for the above repo. Thank you to [Cheng Chen](b20170310@xs.ustb.edu.cn), [Daiheng Gao](samuel.gao023@gmail.com), [Jie Zhang](jpeter.zhang@connect.polyu.hk) and [Xing Tao](kakatao@foxmail.com) for all the help I received.
