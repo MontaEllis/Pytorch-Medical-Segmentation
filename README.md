@@ -11,7 +11,7 @@
 
 ## Notice
 * You can modify **hparam.py** to determine whether 2D or 3D segmentation and whether multicategorization is possible.
-* We provide backbone networks for almost all 2D and 3D segmentation.
+* We provide algorithms for almost all 2D and 3D segmentation.
 * This repository is compatible with all medical data formats, by modifying **fold_arch** in **hparam.py** of the config.
 
 
@@ -37,7 +37,7 @@ python test.py
 
 
 
-## TODO
+## Done
 * 2D
     - [x] unet
     - [x] unet++

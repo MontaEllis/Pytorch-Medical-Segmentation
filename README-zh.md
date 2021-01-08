@@ -12,7 +12,7 @@
 ## 通知
 * 您可以修改**hparam.py**文件来确定是2D分割还是3D分割以及是否可以进行多分类。
 
-* 我们几乎为所有的2D和3D分割提供了骨干网络。
+* 我们几乎提供了所有的2D和3D分割的算法。
 * 本项目兼容所有的医学数据格式，修改**hparam.py**的**fold_arch**即可。
 
 
@@ -36,7 +36,7 @@ python test.py
 ![](https://ellis.oss-cn-beijing.aliyuncs.com/img/20210108181532.png)
 
 
-## TODO
+## Done
 * 2D
     - [x] unet
     - [x] unet++
