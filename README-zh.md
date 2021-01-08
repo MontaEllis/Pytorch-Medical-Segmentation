@@ -13,7 +13,7 @@
 * 您可以修改**hparam.py**文件来确定是2D分割还是3D分割以及是否可以进行多分类。
 
 * 我们几乎提供了所有的2D和3D分割的算法。
-* 本项目兼容所有的医学数据格式，修改**hparam.py**的**fold_arch**即可。
+* 本项目兼容几乎所有的医学数据格式(例如 nii.gz, nii, mhd, nrrd, ...)，修改**hparam.py**的**fold_arch**即可。
 
 
 ## 训练
@@ -58,4 +58,4 @@ python test.py
 ![](https://ellis.oss-cn-beijing.aliyuncs.com/img/20210108181721.png)
 
 ## 致谢
-这个项目是一个非官方PyTorch实现的3D和2D医学分割，高度依赖于[MedicalZooPytorch](https://github.com/black0017/MedicalZooPytorch)和[torchio](https://github.com/fepegar/torchio)。感谢上述项目。感谢[Cheng Chen](b20170310@xs.ustb.edu.cn), [Daiheng Gao](samuel.gao023@gmail.com), [Jie Zhang](jpeter.zhang@connect.polyu.hk)和[Xing Tao](kakatao@foxmail.com)对我的帮助。
+这个项目是一个非官方PyTorch实现的3D和2D医学分割，高度依赖于[MedicalZooPytorch](https://github.com/black0017/MedicalZooPytorch)和[torchio](https://github.com/fepegar/torchio)。感谢上述项目。感谢[Cheng Chen](b20170310@xs.ustb.edu.cn), [Daiheng Gao](https://github.com/tomguluson92), [Jie Zhang](jpeter.zhang@connect.polyu.hk)和[Xing Tao](kakatao@foxmail.com)对我的帮助。
