@@ -33,7 +33,7 @@ python test.py
 ```
 
 ## Examples
-![](https://ellis.oss-cn-beijing.aliyuncs.com/img/20210108180425.png)
+![](https://ellis.oss-cn-beijing.aliyuncs.com/img/20210108181532.png)
 
 
 
@@ -57,7 +57,7 @@ python test.py
 
 ## By The Way
 This project is not perfect and there are still many problems. If you are using this project and would like to give the author some feedback, you can send [Kangneng Zhou](elliszkn@163.com) an email or contact him to join a wechat group via scan:
-![](https://ellis.oss-cn-beijing.aliyuncs.com/img/20210108151444.png)
+![](https://ellis.oss-cn-beijing.aliyuncs.com/img/20210108181721.png)
 
 ## Acknowledgements
 This repository is an unoffical PyTorch implementation of Medical segmentation in 3D and 2D and highly based on [MedicalZooPytorch](https://github.com/black0017/MedicalZooPytorch) and [torchio](https://github.com/fepegar/torchio).Thank you for the above repo. Thank you to [Cheng Chen](b20170310@xs.ustb.edu.cn), [Daiheng Gao](samuel.gao023@gmail.com), [Jie Zhang](jpeter.zhang@connect.polyu.hk) and [Xing Tao](kakatao@foxmail.com) for all the help I received.
