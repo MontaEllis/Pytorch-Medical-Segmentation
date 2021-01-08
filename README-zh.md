@@ -42,7 +42,7 @@ python test.py
     - [x] miniseg
     - [x] segnet
     - [x] pspnet
-    - [x] highresnet
+    - [x] highresnet(copy from https://github.com/fepegar/highresnet, Thank you to [fepegar](https://github.com/fepegar) for your generosity!)
     - [x] deeplab
     - [x] fcn
 * 3D
@@ -50,7 +50,7 @@ python test.py
     - [x] densevoxelnet3d
     - [x] fcn3d
     - [x] vnet3d
-    - [x] highresnert
+    - [x] highresnert(copy from https://github.com/fepegar/highresnet, Thank you to [fepegar](https://github.com/fepegar) for your generosity!)
     - [x] densenet3d
 
 ## By The Way
