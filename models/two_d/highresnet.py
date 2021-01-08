@@ -5,6 +5,7 @@ import os
 from ...utils.dilation import DilationBlock
 from ...utils.convolution import ConvolutionalBlock
 
+# copy from https://github.com/fepegar/highresnet, Thank you to [fepegar](https://github.com/fepegar) for your generosity!
 
 __all__ = ['HighResNet', 'HighRes2DNet', 'HighRes3DNet']
 
