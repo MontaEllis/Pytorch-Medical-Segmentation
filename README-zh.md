@@ -33,8 +33,7 @@ python test.py
 ```
 
 ## 实例
-![](https://ellis.oss-cn-beijing.aliyuncs.com/img/20210108181532.png)
-
+![](https://ellis.oss-cn-beijing.aliyuncs.com/img/20210108185333.png)
 
 ## Done
 * 2D
