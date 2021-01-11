@@ -37,21 +37,26 @@ python test.py
 
 ## Done
 * 2D
-    - [x] unet
-    - [x] unet++
-    - [x] miniseg
-    - [x] segnet
-    - [x] pspnet
-    - [x] highresnet(copy from https://github.com/fepegar/highresnet, Thank you to [fepegar](https://github.com/fepegar) for your generosity!)
-    - [x] deeplab
-    - [x] fcn
+- [x] unet
+- [x] unet++
+- [x] miniseg
+- [x] segnet
+- [x] pspnet
+- [x] highresnet(copy from https://github.com/fepegar/highresnet, Thank you to [fepegar](https://github.com/fepegar) for your generosity!)
+- [x] deeplab
+- [x] fcn
 * 3D
-    - [x] unet3d
-    - [x] densevoxelnet3d
-    - [x] fcn3d
-    - [x] vnet3d
-    - [x] highresnert(copy from https://github.com/fepegar/highresnet, Thank you to [fepegar](https://github.com/fepegar) for your generosity!)
-    - [x] densenet3d
+- [x] unet3d
+- [x] densevoxelnet3d
+- [x] fcn3d
+- [x] vnet3d
+- [x] highresnert(copy from https://github.com/fepegar/highresnet, Thank you to [fepegar](https://github.com/fepegar) for your generosity!)
+- [x] densenet3d
+
+## TODO
+- [ ] dataset
+- [ ] benchmark
+- [ ] nnunet
 
 ## By The Way
 这个项目并不完美，还存在很多问题。如果您正在使用这个项目，并想给作者一些反馈，您可以给[Kangneng Zhou](elliszkn@163.com)发邮件.
