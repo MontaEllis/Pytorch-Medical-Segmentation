@@ -13,8 +13,13 @@
 * You can modify **hparam.py** to determine whether 2D or 3D segmentation and whether multicategorization is possible.
 * We provide algorithms for almost all 2D and 3D segmentation.
 * This repository is compatible with almost all medical data formats(e.g. nii.gz, nii, mhd, nrrd, ...), by modifying **fold_arch** in **hparam.py** of the config.
-
-
+* If you want to use a **multi-category** program, please modify the following codes yourself. I cannot identify your specific categories.
+    * https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/48edef7751af8551b7432b5491f4cf1964bd0cfc/hparam.py#L6
+    * https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/48edef7751af8551b7432b5491f4cf1964bd0cfc/main.py#L235
+    * https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/48edef7751af8551b7432b5491f4cf1964bd0cfc/main.py#L336
+    * https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/48edef7751af8551b7432b5491f4cf1964bd0cfc/main.py#L496
+    * https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/48edef7751af8551b7432b5491f4cf1964bd0cfc/data_function.py#L69
+    * https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/48edef7751af8551b7432b5491f4cf1964bd0cfc/data_function.py#L167
 
 ## Training
 * without pretrained-model
@@ -59,6 +64,7 @@ python main.py
 - [x] densenet3d
 
 ## TODO
+- [ ] metrics.py to evaluate your results
 - [ ] dataset
 - [ ] benchmark
 - [ ] nnunet

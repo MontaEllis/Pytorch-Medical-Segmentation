@@ -11,9 +11,15 @@
 
 ## 通知
 * 您可以修改**hparam.py**文件来确定是2D分割还是3D分割以及是否可以进行多分类。
-
 * 我们几乎提供了所有的2D和3D分割的算法。
 * 本项目兼容几乎所有的医学数据格式(例如 nii.gz, nii, mhd, nrrd, ...)，修改**hparam.py**的**fold_arch**即可。
+* 如果您想进行**多分类**分割，请自行修改下列代码。我不能确定您的具体分类数。
+    * https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/48edef7751af8551b7432b5491f4cf1964bd0cfc/hparam.py#L6
+    * https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/48edef7751af8551b7432b5491f4cf1964bd0cfc/main.py#L235
+    * https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/48edef7751af8551b7432b5491f4cf1964bd0cfc/main.py#L336
+    * https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/48edef7751af8551b7432b5491f4cf1964bd0cfc/main.py#L496
+    * https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/48edef7751af8551b7432b5491f4cf1964bd0cfc/data_function.py#L69
+    * https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/48edef7751af8551b7432b5491f4cf1964bd0cfc/data_function.py#L167
 
 
 ## 训练
@@ -57,6 +63,7 @@ python main.py
 - [x] densenet3d
 
 ## TODO
+- [ ] metrics.py 来评估您的结果
 - [ ] dataset
 - [ ] benchmark
 - [ ] nnunet
