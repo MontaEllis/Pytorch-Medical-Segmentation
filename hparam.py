@@ -1,5 +1,6 @@
 class hparams:
 
+    train_or_test = 'train'
     debug = False
     mode = '2d' # '2d or '3d'
     in_class = 1

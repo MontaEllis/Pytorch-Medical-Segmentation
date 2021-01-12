@@ -19,17 +19,20 @@
 ## 训练
 * 不使用预训练模型
 ```
-python train.py
+set hparam.train_or_test to 'train'
+python main.py
 ```
 * 使用预训练模型
 ```
-python train.py -k True
+set hparam.train_or_test to 'train'
+python main.py -k True
 ```
   
 ## Inference
 * 测试
 ```
-python test.py
+set hparam.train_or_test to 'test'
+python main.py
 ```
 
 ## 实例

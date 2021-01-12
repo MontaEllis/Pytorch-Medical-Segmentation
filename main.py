@@ -531,4 +531,7 @@ def test():
    
 
 if __name__ == '__main__':
-    train()
+    if hp.train_or_test == 'train':
+        train()
+    elif hp.train_or_test == 'test':
+        test()

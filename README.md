@@ -19,17 +19,20 @@
 ## Training
 * without pretrained-model
 ```
-python train.py
+set hparam.train_or_test to 'train'
+python main.py
 ```
 * with pretrained-model
 ```
-python train.py -k True
+set hparam.train_or_test to 'train'
+python main.py -k True
 ```
   
 ## Inference
 * testing
 ```
-python test.py
+set hparam.train_or_test to 'test'
+python main.py
 ```
 
 ## Examples
