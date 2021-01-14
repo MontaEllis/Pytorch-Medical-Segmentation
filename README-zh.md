@@ -21,6 +21,78 @@
     * https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/48edef7751af8551b7432b5491f4cf1964bd0cfc/data_function.py#L69
     * https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/48edef7751af8551b7432b5491f4cf1964bd0cfc/data_function.py#L167
 
+## 准备您的数据
+### 例1
+如果您的source文件夹如下排列 :
+```
+source_dataset
+├── source_1.mhd
+├── source_1.zraw
+├── source_2.mhd
+├── source_2.zraw
+├── source_3.mhd
+├── source_3.zraw
+├── source_4.mhd
+├── source_4.zraw
+└── ...
+```
+
+同时您的label文件夹如下排列 :
+```
+label_dataset
+├── label_1.mhd
+├── label_1.zraw
+├── label_2.mhd
+├── label_2.zraw
+├── label_3.mhd
+├── label_3.zraw
+├── label_4.mhd
+├── label_4.zraw
+└── ...
+```
+
+您应该修改 **fold_arch** 为 **(*.mhd)**, **source_train_dir** 为 **source_dataset** 并修改 **label_train_dir** 为 **label_dataset** in **hparam.py**
+
+### Example2
+如果您的source文件夹如下排列 :
+```
+source_dataset
+├── 1
+    ├── source_1.mhd
+    ├── source_1.zraw
+├── 2
+    ├── source_2.mhd
+    ├── source_2.zraw
+├── 3
+    ├── source_3.mhd
+    ├── source_3.zraw
+├── 4
+    ├── source_4.mhd
+    ├── source_4.zraw
+└── ...
+```
+
+同时您的label文件夹如下排列 :
+```
+label_dataset
+├── 1
+    ├── label_1.mhd
+    ├── label_1.zraw
+├── 2
+    ├── label_2.mhd
+    ├── label_2.zraw
+├── 3
+    ├── label_3.mhd
+    ├── label_3.zraw
+├── 4
+    ├── label_4.mhd
+    ├── label_4.zraw
+└── ...
+```
+
+您应该修改 **fold_arch** 为 **(*/*.mhd)**, **source_train_dir** 为 **source_dataset** 并修改 **label_train_dir** 为 **label_dataset** in **hparam.py**
+
+
 
 ## 训练
 * 不使用预训练模型

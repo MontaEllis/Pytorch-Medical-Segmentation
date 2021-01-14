@@ -21,6 +21,78 @@
     * https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/48edef7751af8551b7432b5491f4cf1964bd0cfc/data_function.py#L69
     * https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/48edef7751af8551b7432b5491f4cf1964bd0cfc/data_function.py#L167
 
+## Prepare Your Dataset
+### Example1
+if your source dataset is :
+```
+source_dataset
+├── source_1.mhd
+├── source_1.zraw
+├── source_2.mhd
+├── source_2.zraw
+├── source_3.mhd
+├── source_3.zraw
+├── source_4.mhd
+├── source_4.zraw
+└── ...
+```
+
+and your label dataset is :
+```
+label_dataset
+├── label_1.mhd
+├── label_1.zraw
+├── label_2.mhd
+├── label_2.zraw
+├── label_3.mhd
+├── label_3.zraw
+├── label_4.mhd
+├── label_4.zraw
+└── ...
+```
+
+then your should modify **fold_arch** as **(*.mhd)**, **source_train_dir** as **source_dataset** and **label_train_dir** as **label_dataset** in **hparam.py**
+
+### Example2
+if your source dataset is :
+```
+source_dataset
+├── 1
+    ├── source_1.mhd
+    ├── source_1.zraw
+├── 2
+    ├── source_2.mhd
+    ├── source_2.zraw
+├── 3
+    ├── source_3.mhd
+    ├── source_3.zraw
+├── 4
+    ├── source_4.mhd
+    ├── source_4.zraw
+└── ...
+```
+
+and your label dataset is :
+```
+label_dataset
+├── 1
+    ├── label_1.mhd
+    ├── label_1.zraw
+├── 2
+    ├── label_2.mhd
+    ├── label_2.zraw
+├── 3
+    ├── label_3.mhd
+    ├── label_3.zraw
+├── 4
+    ├── label_4.mhd
+    ├── label_4.zraw
+└── ...
+```
+
+then your should modify **fold_arch** as **(*/*.mhd)**, **source_train_dir** as **source_dataset** and **label_train_dir** as **label_dataset** in **hparam.py**
+
+
 ## Training
 * without pretrained-model
 ```
