@@ -51,7 +51,7 @@ label_dataset
 └── ...
 ```
 
-then your should modify **fold_arch** as **(*.mhd)**, **source_train_dir** as **source_dataset** and **label_train_dir** as **label_dataset** in **hparam.py**
+then your should modify **fold_arch** as **\*.mhd**, **source_train_dir** as **source_dataset** and **label_train_dir** as **label_dataset** in **hparam.py**
 
 ### Example2
 if your source dataset is :
@@ -90,7 +90,7 @@ label_dataset
 └── ...
 ```
 
-then your should modify **fold_arch** as **(*/*.mhd)**, **source_train_dir** as **source_dataset** and **label_train_dir** as **label_dataset** in **hparam.py**
+then your should modify **fold_arch** as **\*/\*.mhd**, **source_train_dir** as **source_dataset** and **label_train_dir** as **label_dataset** in **hparam.py**
 
 
 ## Training

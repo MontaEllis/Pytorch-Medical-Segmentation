@@ -51,7 +51,7 @@ label_dataset
 └── ...
 ```
 
-您应该修改 **fold_arch** 为 **(*.mhd)**, **source_train_dir** 为 **source_dataset** 并修改 **label_train_dir** 为 **label_dataset** in **hparam.py**
+您应该修改 **fold_arch** 为 **\*.mhd**, **source_train_dir** 为 **source_dataset** 并修改 **label_train_dir** 为 **label_dataset** in **hparam.py**
 
 ### Example2
 如果您的source文件夹如下排列 :
@@ -90,7 +90,7 @@ label_dataset
 └── ...
 ```
 
-您应该修改 **fold_arch** 为 **(*/*.mhd)**, **source_train_dir** 为 **source_dataset** 并修改 **label_train_dir** 为 **label_dataset** in **hparam.py**
+您应该修改 **fold_arch** 为 **\*/\*.mhd**, **source_train_dir** 为 **source_dataset** 并修改 **label_train_dir** 为 **label_dataset** in **hparam.py**
 
 
 
