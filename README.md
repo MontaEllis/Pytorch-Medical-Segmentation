@@ -20,6 +20,7 @@
     * https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/48edef7751af8551b7432b5491f4cf1964bd0cfc/main.py#L496
     * https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/48edef7751af8551b7432b5491f4cf1964bd0cfc/data_function.py#L69
     * https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/48edef7751af8551b7432b5491f4cf1964bd0cfc/data_function.py#L167
+* Whether in 2D or 3D, this project is processed using **patch**. Therefore, images do not have to be strictly the same size. 
 
 ## Prepare Your Dataset
 ### Example1
