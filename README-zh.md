@@ -20,7 +20,7 @@
     * https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/48edef7751af8551b7432b5491f4cf1964bd0cfc/main.py#L496
     * https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/48edef7751af8551b7432b5491f4cf1964bd0cfc/data_function.py#L69
     * https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/48edef7751af8551b7432b5491f4cf1964bd0cfc/data_function.py#L167
-* 不论是2D或是3D，本项目均采用patch的方式。故图片大小不必严格保持一致。
+* 不论是2D或是3D，本项目均采用**patch**的方式。故图片大小不必严格保持一致。
 
 ## 准备您的数据
 ### 例1
