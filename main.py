@@ -443,7 +443,7 @@ def test():
 
 
     test_dataset = MedData_test(source_test_dir,label_test_dir)
-
+    znorm = ZNormalization()
 
     if hp.mode == '3d':
         patch_overlap = 4,4,4
@@ -454,7 +454,7 @@ def test():
 
 
     for i,subj in enumerate(test_dataset.subjects):
-
+        subj = znorm(subj)
         grid_sampler = torchio.inference.GridSampler(
                 subj,
                 patch_size,
@@ -484,7 +484,7 @@ def test():
                 labels[labels>0.5] = 1
                 labels[labels<=0.5] = 0
 
-                aggregator.add_batch(outputs, locations)
+                aggregator.add_batch(logits, locations)
                 aggregator_1.add_batch(labels, locations)
         output_tensor = aggregator.get_output_tensor()
         output_tensor_1 = aggregator_1.get_output_tensor()

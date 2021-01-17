@@ -191,20 +191,20 @@ class MedData_test(torch.utils.data.Dataset):
                 self.subjects.append(subject)
 
 
-        self.transforms = self.transform()
+        # self.transforms = self.transform()
 
-        self.training_set = tio.SubjectsDataset(self.subjects, transform=self.transforms)
+        self.training_set = tio.SubjectsDataset(self.subjects, transform=None)
 
 
-    def transform(self):
+    # def transform(self):
 
-        training_transform = Compose([
-        ZNormalization(),
-        ])
+    #     training_transform = Compose([
+    #     ZNormalization(),
+    #     ])
         
 
 
-        return training_transform
+    #     return training_transform
 
 
 
