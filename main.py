@@ -254,6 +254,14 @@ def train():
 
             outputs = model(x)
 
+
+            # for metrics
+            logits = torch.sigmoid(outputs)
+            labels = logits.clone()
+            labels[labels>0.5] = 1
+            labels[labels<=0.5] = 0
+
+
             loss = criterion(outputs, y)
 
             num_iters += 1
@@ -263,7 +271,7 @@ def train():
             iteration += 1
 
 
-            false_positive_rate,false_negtive_rate,dice = metric(y.cpu(),outputs.cpu())
+            false_positive_rate,false_negtive_rate,dice = metric(y.cpu(),labels.cpu())
             ## log
             writer.add_scalar('Training/Loss', loss.item(),iteration)
             writer.add_scalar('Training/false_positive_rate', false_positive_rate,iteration)

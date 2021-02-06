@@ -4,6 +4,7 @@
 
 ## 最近的更新
 * 2021.1.8 训练和测试代码已经发布
+* 2021.2.6 修复计算dice的一个bug，感谢[Shanshan Li](https://github.com/ssli23)的帮助~
 
 ## 环境要求
 * pytorch1.7
@@ -146,4 +147,4 @@ python main.py
 这个项目并不完美，还存在很多问题。如果您正在使用这个项目，并想给作者一些反馈，您可以给[Kangneng Zhou](elliszkn@163.com)发邮件，或添加他的**微信**：ellisgege666
 
 ## 致谢
-这个项目是一个非官方PyTorch实现的3D和2D医学分割，高度依赖于[MedicalZooPytorch](https://github.com/black0017/MedicalZooPytorch)和[torchio](https://github.com/fepegar/torchio)。感谢上述项目。感谢[Cheng Chen](b20170310@xs.ustb.edu.cn), [Daiheng Gao](https://github.com/tomguluson92), [Jie Zhang](jpeter.zhang@connect.polyu.hk), [Xing Tao](kakatao@foxmail.com)和[Weili Jiang](1379252229@qq.com) 对我的帮助。
+这个项目是一个非官方PyTorch实现的3D和2D医学分割，高度依赖于[MedicalZooPytorch](https://github.com/black0017/MedicalZooPytorch)和[torchio](https://github.com/fepegar/torchio)。感谢上述项目。感谢[Cheng Chen](b20170310@xs.ustb.edu.cn), [Daiheng Gao](https://github.com/tomguluson92), [Jie Zhang](jpeter.zhang@connect.polyu.hk), [Xing Tao](kakatao@foxmail.com), [Weili Jiang](1379252229@qq.com)和[Shanshan Li](https://github.com/ssli23) 对我的帮助。
