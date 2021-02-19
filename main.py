@@ -191,7 +191,7 @@ def train():
 
     train_dataset = MedData_train(source_train_dir,label_train_dir)
     train_loader = DataLoader(train_dataset.queue_dataset, 
-                            batch_size=4, 
+                            batch_size=args.batch, 
                             shuffle=True,
                             pin_memory=True,
                             drop_last=True)
