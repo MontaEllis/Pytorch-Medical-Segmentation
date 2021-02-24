@@ -134,7 +134,7 @@ def train():
 
     elif hp.mode == '3d':
         from models.three_d.unet3d import UNet
-        model = UNet(in_dim=hp.in_class, out_dim=hp.out_class, num_filters=2)
+        model = UNet(in_channels=hp.in_class, n_classes=hp.out_class, base_n_filter=2)
 
         #from models.three_d.fcn3d import FCN_Net
         #model = FCN_Net(in_channels =hp.in_class,n_class =hp.out_class)
@@ -416,7 +416,7 @@ def test():
 
     elif hp.mode == '3d':
         from models.three_d.unet3d import UNet
-        model = UNet(in_dim=hp.in_class, out_dim=hp.out_class, num_filters=2)
+        model = UNet(in_channels=hp.in_class, n_classes=hp.out_class, base_n_filter=2)
 
         #from models.three_d.fcn3d import FCN_Net
         #model = FCN_Net(in_channels =hp.in_class,n_class =hp.out_class)

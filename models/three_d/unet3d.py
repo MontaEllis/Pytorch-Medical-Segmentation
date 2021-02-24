@@ -5,111 +5,203 @@ import torch.nn as nn
 import os
 
 
-def conv_block_3d(in_dim, out_dim, activation):
-    return nn.Sequential(
-        nn.Conv3d(in_dim, out_dim, kernel_size=3, stride=1, padding=1),
-        nn.BatchNorm3d(out_dim),
-        activation,)
-
-
-def conv_trans_block_3d(in_dim, out_dim, activation):
-    return nn.Sequential(
-        nn.ConvTranspose3d(in_dim, out_dim, kernel_size=3, stride=2, padding=1, output_padding=1),
-        nn.BatchNorm3d(out_dim),
-        activation,)
-
-
-def max_pooling_3d():
-    return nn.MaxPool3d(kernel_size=2, stride=2, padding=0)
-
-
-def conv_block_2_3d(in_dim, out_dim, activation):
-    return nn.Sequential(
-        conv_block_3d(in_dim, out_dim, activation),
-        nn.Conv3d(out_dim, out_dim, kernel_size=3, stride=1, padding=1),
-        nn.BatchNorm3d(out_dim),)
-
 class UNet(nn.Module):
-    def __init__(self, in_dim, out_dim, num_filters):
+    """
+    Implementations based on the Unet3D paper: https://arxiv.org/abs/1606.06650
+    """
+
+    def __init__(self, in_channels, n_classes, base_n_filter=8):
         super(UNet, self).__init__()
-        self.in_dim = in_dim
-        self.out_dim = out_dim
-        self.num_filters = num_filters
-        activation = nn.LeakyReLU(0.2, inplace=True)
-        
-        # Down sampling
-        self.down_1 = conv_block_2_3d(self.in_dim, self.num_filters, activation)
-        self.pool_1 = max_pooling_3d()
-        self.down_2 = conv_block_2_3d(self.num_filters, self.num_filters * 2, activation)
-        self.pool_2 = max_pooling_3d()
-        self.down_3 = conv_block_2_3d(self.num_filters * 2, self.num_filters * 4, activation)
-        self.pool_3 = max_pooling_3d()
-        self.down_4 = conv_block_2_3d(self.num_filters * 4, self.num_filters * 8, activation)
-        self.pool_4 = max_pooling_3d()
-        self.down_5 = conv_block_2_3d(self.num_filters * 8, self.num_filters * 16, activation)
-        self.pool_5 = max_pooling_3d()
-        
-        # Bridge
-        self.bridge = conv_block_2_3d(self.num_filters * 16, self.num_filters * 32, activation)
-        
-        # Up sampling
-        self.trans_1 = conv_trans_block_3d(self.num_filters * 32, self.num_filters * 32, activation)
-        self.up_1 = conv_block_2_3d(self.num_filters * 48, self.num_filters * 16, activation)
-        self.trans_2 = conv_trans_block_3d(self.num_filters * 16, self.num_filters * 16, activation)
-        self.up_2 = conv_block_2_3d(self.num_filters * 24, self.num_filters * 8, activation)
-        self.trans_3 = conv_trans_block_3d(self.num_filters * 8, self.num_filters * 8, activation)
-        self.up_3 = conv_block_2_3d(self.num_filters * 12, self.num_filters * 4, activation)
-        self.trans_4 = conv_trans_block_3d(self.num_filters * 4, self.num_filters * 4, activation)
-        self.up_4 = conv_block_2_3d(self.num_filters * 6, self.num_filters * 2, activation)
-        self.trans_5 = conv_trans_block_3d(self.num_filters * 2, self.num_filters * 2, activation)
-        self.up_5 = conv_block_2_3d(self.num_filters * 3, self.num_filters * 1, activation)
-        
-        # Output
-        self.out = conv_block_3d(self.num_filters, out_dim, activation)
-    
+        self.in_channels = in_channels
+        self.n_classes = n_classes
+        self.base_n_filter = base_n_filter
+
+        self.lrelu = nn.LeakyReLU()
+        self.dropout3d = nn.Dropout3d(p=0.6)
+        self.upsacle = nn.Upsample(scale_factor=2, mode='nearest')
+        self.softmax = nn.Softmax(dim=1)
+
+        self.conv3d_c1_1 = nn.Conv3d(self.in_channels, self.base_n_filter, kernel_size=3, stride=1, padding=1,
+                                     bias=False)
+        self.conv3d_c1_2 = nn.Conv3d(self.base_n_filter, self.base_n_filter, kernel_size=3, stride=1, padding=1,
+                                     bias=False)
+        self.lrelu_conv_c1 = self.lrelu_conv(self.base_n_filter, self.base_n_filter)
+        self.inorm3d_c1 = nn.InstanceNorm3d(self.base_n_filter)
+
+        self.conv3d_c2 = nn.Conv3d(self.base_n_filter, self.base_n_filter * 2, kernel_size=3, stride=2, padding=1,
+                                   bias=False)
+        self.norm_lrelu_conv_c2 = self.norm_lrelu_conv(self.base_n_filter * 2, self.base_n_filter * 2)
+        self.inorm3d_c2 = nn.InstanceNorm3d(self.base_n_filter * 2)
+
+        self.conv3d_c3 = nn.Conv3d(self.base_n_filter * 2, self.base_n_filter * 4, kernel_size=3, stride=2, padding=1,
+                                   bias=False)
+        self.norm_lrelu_conv_c3 = self.norm_lrelu_conv(self.base_n_filter * 4, self.base_n_filter * 4)
+        self.inorm3d_c3 = nn.InstanceNorm3d(self.base_n_filter * 4)
+
+        self.conv3d_c4 = nn.Conv3d(self.base_n_filter * 4, self.base_n_filter * 8, kernel_size=3, stride=2, padding=1,
+                                   bias=False)
+        self.norm_lrelu_conv_c4 = self.norm_lrelu_conv(self.base_n_filter * 8, self.base_n_filter * 8)
+        self.inorm3d_c4 = nn.InstanceNorm3d(self.base_n_filter * 8)
+
+        self.conv3d_c5 = nn.Conv3d(self.base_n_filter * 8, self.base_n_filter * 16, kernel_size=3, stride=2, padding=1,
+                                   bias=False)
+        self.norm_lrelu_conv_c5 = self.norm_lrelu_conv(self.base_n_filter * 16, self.base_n_filter * 16)
+        self.norm_lrelu_upscale_conv_norm_lrelu_l0 = self.norm_lrelu_upscale_conv_norm_lrelu(self.base_n_filter * 16,
+                                                                                             self.base_n_filter * 8)
+
+        self.conv3d_l0 = nn.Conv3d(self.base_n_filter * 8, self.base_n_filter * 8, kernel_size=1, stride=1, padding=0,
+                                   bias=False)
+        self.inorm3d_l0 = nn.InstanceNorm3d(self.base_n_filter * 8)
+
+        self.conv_norm_lrelu_l1 = self.conv_norm_lrelu(self.base_n_filter * 16, self.base_n_filter * 16)
+        self.conv3d_l1 = nn.Conv3d(self.base_n_filter * 16, self.base_n_filter * 8, kernel_size=1, stride=1, padding=0,
+                                   bias=False)
+        self.norm_lrelu_upscale_conv_norm_lrelu_l1 = self.norm_lrelu_upscale_conv_norm_lrelu(self.base_n_filter * 8,
+                                                                                             self.base_n_filter * 4)
+
+        self.conv_norm_lrelu_l2 = self.conv_norm_lrelu(self.base_n_filter * 8, self.base_n_filter * 8)
+        self.conv3d_l2 = nn.Conv3d(self.base_n_filter * 8, self.base_n_filter * 4, kernel_size=1, stride=1, padding=0,
+                                   bias=False)
+        self.norm_lrelu_upscale_conv_norm_lrelu_l2 = self.norm_lrelu_upscale_conv_norm_lrelu(self.base_n_filter * 4,
+                                                                                             self.base_n_filter * 2)
+
+        self.conv_norm_lrelu_l3 = self.conv_norm_lrelu(self.base_n_filter * 4, self.base_n_filter * 4)
+        self.conv3d_l3 = nn.Conv3d(self.base_n_filter * 4, self.base_n_filter * 2, kernel_size=1, stride=1, padding=0,
+                                   bias=False)
+        self.norm_lrelu_upscale_conv_norm_lrelu_l3 = self.norm_lrelu_upscale_conv_norm_lrelu(self.base_n_filter * 2,
+                                                                                             self.base_n_filter)
+
+        self.conv_norm_lrelu_l4 = self.conv_norm_lrelu(self.base_n_filter * 2, self.base_n_filter * 2)
+        self.conv3d_l4 = nn.Conv3d(self.base_n_filter * 2, self.n_classes, kernel_size=1, stride=1, padding=0,
+                                   bias=False)
+
+        self.ds2_1x1_conv3d = nn.Conv3d(self.base_n_filter * 8, self.n_classes, kernel_size=1, stride=1, padding=0,
+                                        bias=False)
+        self.ds3_1x1_conv3d = nn.Conv3d(self.base_n_filter * 4, self.n_classes, kernel_size=1, stride=1, padding=0,
+                                        bias=False)
+        self.sigmoid = nn.Sigmoid()
+
+    def conv_norm_lrelu(self, feat_in, feat_out):
+        return nn.Sequential(
+            nn.Conv3d(feat_in, feat_out, kernel_size=3, stride=1, padding=1, bias=False),
+            nn.InstanceNorm3d(feat_out),
+            nn.LeakyReLU())
+
+    def norm_lrelu_conv(self, feat_in, feat_out):
+        return nn.Sequential(
+            nn.InstanceNorm3d(feat_in),
+            nn.LeakyReLU(),
+            nn.Conv3d(feat_in, feat_out, kernel_size=3, stride=1, padding=1, bias=False))
+
+    def lrelu_conv(self, feat_in, feat_out):
+        return nn.Sequential(
+            nn.LeakyReLU(),
+            nn.Conv3d(feat_in, feat_out, kernel_size=3, stride=1, padding=1, bias=False))
+
+    def norm_lrelu_upscale_conv_norm_lrelu(self, feat_in, feat_out):
+        return nn.Sequential(
+            nn.InstanceNorm3d(feat_in),
+            nn.LeakyReLU(),
+            nn.Upsample(scale_factor=2, mode='nearest'),
+            # should be feat_in*2 or feat_in
+            nn.Conv3d(feat_in, feat_out, kernel_size=3, stride=1, padding=1, bias=False),
+            nn.InstanceNorm3d(feat_out),
+            nn.LeakyReLU())
+
     def forward(self, x):
-        # Down sampling
-        down_1 = self.down_1(x) # -> [1, 4, 128, 128, 128]
-        pool_1 = self.pool_1(down_1) # -> [1, 4, 64, 64, 64]
-        
-        down_2 = self.down_2(pool_1) # -> [1, 8, 64, 64, 64]
-        pool_2 = self.pool_2(down_2) # -> [1, 8, 32, 32, 32]
-        
-        down_3 = self.down_3(pool_2) # -> [1, 16, 32, 32, 32]
-        pool_3 = self.pool_3(down_3) # -> [1, 16, 16, 16, 16]
-        
-        down_4 = self.down_4(pool_3) # -> [1, 32, 16, 16, 16]
-        pool_4 = self.pool_4(down_4) # -> [1, 32, 8, 8, 8]
-        
-        down_5 = self.down_5(pool_4) # -> [1, 64, 8, 8, 8]
-        pool_5 = self.pool_5(down_5) # -> [1, 64, 4, 4, 4]
-        
-        # Bridge
-        bridge = self.bridge(pool_5) # -> [1, 128, 4, 4, 4]
-        
-        # Up sampling
-        trans_1 = self.trans_1(bridge) # -> [1, 128, 8, 8, 8]
-        concat_1 = torch.cat([trans_1, down_5], dim=1) # -> [1, 192, 8, 8, 8]
-        up_1 = self.up_1(concat_1) # -> [1, 64, 8, 8, 8]
-        
-        trans_2 = self.trans_2(up_1) # -> [1, 64, 16, 16, 16]
-        concat_2 = torch.cat([trans_2, down_4], dim=1) # -> [1, 96, 16, 16, 16]
-        up_2 = self.up_2(concat_2) # -> [1, 32, 16, 16, 16]
-        
-        trans_3 = self.trans_3(up_2) # -> [1, 32, 32, 32, 32]
-        concat_3 = torch.cat([trans_3, down_3], dim=1) # -> [1, 48, 32, 32, 32]
-        up_3 = self.up_3(concat_3) # -> [1, 16, 32, 32, 32]
-        
-        trans_4 = self.trans_4(up_3) # -> [1, 16, 64, 64, 64]
-        concat_4 = torch.cat([trans_4, down_2], dim=1) # -> [1, 24, 64, 64, 64]
-        up_4 = self.up_4(concat_4) # -> [1, 8, 64, 64, 64]
-        
-        trans_5 = self.trans_5(up_4) # -> [1, 8, 128, 128, 128]
-        concat_5 = torch.cat([trans_5, down_1], dim=1) # -> [1, 12, 128, 128, 128]
-        up_5 = self.up_5(concat_5) # -> [1, 4, 128, 128, 128]
-        
-        # Output
-        out = self.out(up_5) # -> [1, 3, 128, 128, 128]
-        return out
-    
+        #  Level 1 context pathway
+        out = self.conv3d_c1_1(x)
+        residual_1 = out
+        out = self.lrelu(out)
+        out = self.conv3d_c1_2(out)
+        out = self.dropout3d(out)
+        out = self.lrelu_conv_c1(out)
+        # Element Wise Summation
+        out += residual_1
+        context_1 = self.lrelu(out)
+        out = self.inorm3d_c1(out)
+        out = self.lrelu(out)
+
+        # Level 2 context pathway
+        out = self.conv3d_c2(out)
+        residual_2 = out
+        out = self.norm_lrelu_conv_c2(out)
+        out = self.dropout3d(out)
+        out = self.norm_lrelu_conv_c2(out)
+        out += residual_2
+        out = self.inorm3d_c2(out)
+        out = self.lrelu(out)
+        context_2 = out
+
+        # Level 3 context pathway
+        out = self.conv3d_c3(out)
+        residual_3 = out
+        out = self.norm_lrelu_conv_c3(out)
+        out = self.dropout3d(out)
+        out = self.norm_lrelu_conv_c3(out)
+        out += residual_3
+        out = self.inorm3d_c3(out)
+        out = self.lrelu(out)
+        context_3 = out
+
+        # Level 4 context pathway
+        out = self.conv3d_c4(out)
+        residual_4 = out
+        out = self.norm_lrelu_conv_c4(out)
+        out = self.dropout3d(out)
+        out = self.norm_lrelu_conv_c4(out)
+        out += residual_4
+        out = self.inorm3d_c4(out)
+        out = self.lrelu(out)
+        context_4 = out
+
+        # Level 5
+        out = self.conv3d_c5(out)
+        residual_5 = out
+        out = self.norm_lrelu_conv_c5(out)
+        out = self.dropout3d(out)
+        out = self.norm_lrelu_conv_c5(out)
+        out += residual_5
+        out = self.norm_lrelu_upscale_conv_norm_lrelu_l0(out)
+
+        out = self.conv3d_l0(out)
+        out = self.inorm3d_l0(out)
+        out = self.lrelu(out)
+
+        # Level 1 localization pathway
+        out = torch.cat([out, context_4], dim=1)
+        out = self.conv_norm_lrelu_l1(out)
+        out = self.conv3d_l1(out)
+        out = self.norm_lrelu_upscale_conv_norm_lrelu_l1(out)
+
+        # Level 2 localization pathway
+        # print(out.shape)
+        # print(context_3.shape)
+        out = torch.cat([out, context_3], dim=1)
+        out = self.conv_norm_lrelu_l2(out)
+        ds2 = out
+        out = self.conv3d_l2(out)
+        out = self.norm_lrelu_upscale_conv_norm_lrelu_l2(out)
+
+        # Level 3 localization pathway
+        out = torch.cat([out, context_2], dim=1)
+        out = self.conv_norm_lrelu_l3(out)
+        ds3 = out
+        out = self.conv3d_l3(out)
+        out = self.norm_lrelu_upscale_conv_norm_lrelu_l3(out)
+
+        # Level 4 localization pathway
+        out = torch.cat([out, context_1], dim=1)
+        out = self.conv_norm_lrelu_l4(out)
+        out_pred = self.conv3d_l4(out)
+
+        ds2_1x1_conv = self.ds2_1x1_conv3d(ds2)
+        ds1_ds2_sum_upscale = self.upsacle(ds2_1x1_conv)
+        ds3_1x1_conv = self.ds3_1x1_conv3d(ds3)
+        ds1_ds2_sum_upscale_ds3_sum = ds1_ds2_sum_upscale + ds3_1x1_conv
+        ds1_ds2_sum_upscale_ds3_sum_upscale = self.upsacle(ds1_ds2_sum_upscale_ds3_sum)
+
+        out = out_pred + ds1_ds2_sum_upscale_ds3_sum_upscale
+        seg_layer = out
+        return seg_layer
    
