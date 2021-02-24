@@ -4,6 +4,7 @@
 ## Recent Updates
 * 2021.1.8 The train and test codes are released.
 * 2021.2.6 A bug in dice was fixed with the help of [Shanshan Li](https://github.com/ssli23).
+* 2021.2.24 A video tutorial was released(https://www.bilibili.com/video/BV1gp4y1H7kq/).
 
 ## Requirements
 * pytorch1.7
@@ -117,6 +118,9 @@ python main.py
 ## Examples
 ![](https://ellis.oss-cn-beijing.aliyuncs.com/img/20210108185333.png)
 ![](https://ellis.oss-cn-beijing.aliyuncs.com/img/2021-02-06%2022-40-07%20%E7%9A%84%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png)
+
+## Tutorials
+* https://www.bilibili.com/video/BV1gp4y1H7kq/
 
 ## Done
 * 2D

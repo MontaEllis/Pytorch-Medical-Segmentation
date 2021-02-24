@@ -5,6 +5,7 @@
 ## 最近的更新
 * 2021.1.8 训练和测试代码已经发布
 * 2021.2.6 修复计算dice的一个bug，感谢[Shanshan Li](https://github.com/ssli23)的帮助~
+* 2021.2.24 发布一个视频教程(https://www.bilibili.com/video/BV1gp4y1H7kq/).
 
 ## 环境要求
 * pytorch1.7
@@ -119,6 +120,11 @@ python main.py
 ## 实例
 ![](https://ellis.oss-cn-beijing.aliyuncs.com/img/20210108185333.png)
 ![](https://ellis.oss-cn-beijing.aliyuncs.com/img/2021-02-06%2022-40-07%20%E7%9A%84%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png)
+
+
+## 教程
+* https://www.bilibili.com/video/BV1gp4y1H7kq/
+
 
 ## Done
 * 2D
