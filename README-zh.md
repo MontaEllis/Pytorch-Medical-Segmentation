@@ -128,6 +128,7 @@ python main.py
 
 
 ## Done
+### Network
 * 2D
 - [x] unet
 - [x] unet++
@@ -145,9 +146,10 @@ python main.py
 - [x] vnet3d
 - [x] highresnert(copy from https://github.com/fepegar/highresnet, Thank you to [fepegar](https://github.com/fepegar) for your generosity!)
 - [x] densenet3d
+### Metric
+- [x] metrics.py 来评估您的结果
 
 ## TODO
-- [ ] metrics.py 来评估您的结果
 - [ ] dataset
 - [ ] benchmark
 - [ ] nnunet

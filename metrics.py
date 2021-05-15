@@ -55,7 +55,7 @@ toc = ToCanonical()
 for i,subj in enumerate(training_set.subjects):
     gt = subj['gt'][tio.DATA]
 
-    subj = toc(subj)
+    # subj = toc(subj)
     pred = subj['pred'][tio.DATA]#.permute(0,1,3,2)
 
     # preds.append(pred)
