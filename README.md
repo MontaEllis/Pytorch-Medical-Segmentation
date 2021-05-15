@@ -5,6 +5,7 @@
 * 2021.1.8 The train and test codes are released.
 * 2021.2.6 A bug in dice was fixed with the help of [Shanshan Li](https://github.com/ssli23).
 * 2021.2.24 A video tutorial was released(https://www.bilibili.com/video/BV1gp4y1H7kq/).
+* 2021.5.16 A bug in Unet3D implement was fixed.
 
 ## Requirements
 * pytorch1.7
@@ -134,6 +135,7 @@ python main.py
 - [x] fcn
 * 3D
 - [x] unet3d
+- [x] residual-unet3d
 - [x] densevoxelnet3d
 - [x] fcn3d
 - [x] vnet3d
