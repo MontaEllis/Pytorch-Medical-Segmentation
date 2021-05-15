@@ -7,6 +7,7 @@
 * 2021.2.6 修复计算dice的一个bug，感谢[Shanshan Li](https://github.com/ssli23)的帮助~
 * 2021.2.24 发布一个视频教程(https://www.bilibili.com/video/BV1gp4y1H7kq/)。
 * 2021.5.16 修复Unet3D实现的错误。
+* 2021.5.16 评估代码公布。
 
 ## 环境要求
 * pytorch1.7
