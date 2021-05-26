@@ -126,7 +126,7 @@ class MedData_train(torch.utils.data.Dataset):
         elif hp.mode == '2d':
             training_transform = Compose([
             CropOrPad((hp.crop_or_pad_size, hp.crop_or_pad_size,1), padding_mode='reflect'),
-            RandomMotion(),
+            # RandomMotion(),
             RandomBiasField(),
             ZNormalization(),
             RandomNoise(),
