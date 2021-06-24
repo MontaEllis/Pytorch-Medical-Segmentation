@@ -17,7 +17,7 @@
 ## Notice
 * You can modify **hparam.py** to determine whether 2D or 3D segmentation and whether multicategorization is possible.
 * We provide algorithms for almost all 2D and 3D segmentation.
-* This repository is compatible with almost all medical data formats(e.g. nii.gz, nii, mhd, nrrd, ...), by modifying **fold_arch** in **hparam.py** of the config.
+* This repository is compatible with almost all medical data formats(e.g. nii.gz, nii, mhd, nrrd, ...), by modifying **fold_arch** in **hparam.py** of the config. **I would like you to convert both the source and label images to the same type before using them, where labels are marked with 1, not 255.**
 * If you want to use a **multi-category** program, please modify the corresponding codes by yourself. I cannot identify your specific categories.
 * Whether in 2D or 3D, this project is processed using **patch**. Therefore, images do not have to be strictly the same size. In 2D, however, you should set the patch large enough.
 
