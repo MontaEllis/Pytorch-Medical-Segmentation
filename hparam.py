@@ -24,6 +24,8 @@ class hparams:
 
     fold_arch = '*.mhd'
 
+    save_arch = '.nii.gz'
+
 
     source_train_dir = 'img'
     label_train_dir = 'label'
