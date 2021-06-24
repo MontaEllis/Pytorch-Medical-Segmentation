@@ -15,22 +15,8 @@ import torch.distributed as dist
 import math
 import torchio
 from torchio.transforms import (
-    RandomFlip,
-    RandomAffine,
-    RandomElasticDeformation,
-    RandomNoise,
-    RandomMotion,
-    RandomBiasField,
-    RescaleIntensity,
-    Resample,
-    ToCanonical,
     ZNormalization,
-    CropOrPad,
-    HistogramStandardization,
-    OneOf,
-    Compose,
 )
-from medpy.io import load,save
 from tqdm import tqdm
 from torchvision import utils
 from hparam import hparams as hp
@@ -56,29 +42,23 @@ def parse_training_args(parser):
     Parse commandline arguments.
     """
 
-    parser.add_argument('-o', '--output_dir', type=str, default='logs', required=False, help='Directory to save checkpoints')
-    parser.add_argument('--latest-checkpoint-file', type=str, default='checkpoint_latest.pt', help='Store the latest checkpoint in each epoch')
+    parser.add_argument('-o', '--output_dir', type=str, default=hp.output_dir, required=False, help='Directory to save checkpoints')
+    parser.add_argument('--latest-checkpoint-file', type=str, default=hp.latest_checkpoint_file, help='Store the latest checkpoint in each epoch')
 
     # training
     training = parser.add_argument_group('training setup')
-    training.add_argument('--epochs', type=int, default=500000, help='Number of total epochs to run')
-    training.add_argument('--epochs-per-checkpoint', type=int, default=1, help='Number of epochs per checkpoint')
-    training.add_argument('--batch', type=int, default=2, help='batch-size')  
-    training.add_argument('--sample', type=int, default=4, help='number of samples during training')  
-
+    training.add_argument('--epochs', type=int, default=hp.total_epochs, help='Number of total epochs to run')
+    training.add_argument('--epochs-per-checkpoint', type=int, default=hp.epochs_per_checkpoint, help='Number of epochs per checkpoint')
+    training.add_argument('--batch', type=int, default=hp.batch_size, help='batch-size')  
     parser.add_argument(
         '-k',
         "--ckpt",
         type=str,
-        default=None,
+        default=hp.ckpt,
         help="path to the checkpoints to resume training",
     )
-
-    parser.add_argument("--init-lr", type=float, default=0.002, help="learning rate")
-
-    parser.add_argument(
-        "--wandb", action="store_true", help="use weights and biases logging"
-    )
+    parser.add_argument("--init-lr", type=float, default=hp.init_lr, help="learning rate")
+    # TODO
     parser.add_argument(
         "--local_rank", type=int, default=0, help="local rank for distributed training"
     )
@@ -87,7 +67,6 @@ def parse_training_args(parser):
     training.add_argument('--cudnn-enabled', default=True, help='Enable cudnn')
     training.add_argument('--cudnn-benchmark', default=True, help='Run cudnn benchmark')
     training.add_argument('--disable-uniform-initialize-bn-weight', action='store_true', help='disable uniform initialization of batchnorm layer weight')
-
 
     return parser
 
@@ -159,11 +138,12 @@ def train():
 
 
 
-    model = torch.nn.DataParallel(model, device_ids=devicess,output_device=[1])
+    model = torch.nn.DataParallel(model, device_ids=devicess)
     optimizer = torch.optim.Adam(model.parameters(), lr=args.init_lr)
 
+
     # scheduler = ReduceLROnPlateau(optimizer, 'min',factor=0.5, patience=20, verbose=True)
-    scheduler = StepLR(optimizer, step_size=30, gamma=0.8)
+    scheduler = StepLR(optimizer, step_size=hp.scheduer_step_size, gamma=hp.scheduer_gamma)
     # scheduler = CosineAnnealingLR(optimizer, T_max=50, eta_min=5e-6)
 
     if args.ckpt is not None:
@@ -253,7 +233,7 @@ def train():
                 x = x.squeeze(4)
                 y = y.squeeze(4)
 
-                y = y/255.
+                y[y!=0] = 1
 
             # print(y.max())
 
@@ -459,11 +439,11 @@ def test():
     znorm = ZNormalization()
 
     if hp.mode == '3d':
-        patch_overlap = 4,4,4
-        patch_size = hp.patch_size,hp.patch_size,hp.patch_size
+        patch_overlap = hp.patch_overlap
+        patch_size = hp.patch_size
     elif hp.mode == '2d':
-        patch_overlap = 4,4,0
-        patch_size = hp.patch_size,hp.patch_size,1
+        patch_overlap = hp.patch_overlap
+        patch_size = hp.patch_size
 
 
     for i,subj in enumerate(test_dataset.subjects):

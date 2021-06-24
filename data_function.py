@@ -111,30 +111,43 @@ class MedData_train(torch.utils.data.Dataset):
     def transform(self):
 
         if hp.mode == '3d':
-            training_transform = Compose([
-            # ToCanonical(),
-            CropOrPad((hp.crop_or_pad_size, hp.crop_or_pad_size, hp.crop_or_pad_size), padding_mode='reflect'),
-            RandomMotion(),
-            RandomBiasField(),
-            ZNormalization(),
-            RandomNoise(),
-            RandomFlip(axes=(0,)),
-            OneOf({
-                RandomAffine(): 0.8,
-                RandomElasticDeformation(): 0.2,
-            }),])
+            if hp.aug:
+                training_transform = Compose([
+                # ToCanonical(),
+                CropOrPad((hp.crop_or_pad_size), padding_mode='reflect'),
+                RandomMotion(),
+                RandomBiasField(),
+                ZNormalization(),
+                RandomNoise(),
+                RandomFlip(axes=(0,)),
+                OneOf({
+                    RandomAffine(): 0.8,
+                    RandomElasticDeformation(): 0.2,
+                }),])
+            else:
+                training_transform = Compose([
+                CropOrPad((hp.crop_or_pad_size, hp.crop_or_pad_size, hp.crop_or_pad_size), padding_mode='reflect'),
+                ZNormalization(),
+                ])
         elif hp.mode == '2d':
-            training_transform = Compose([
-            CropOrPad((hp.crop_or_pad_size, hp.crop_or_pad_size,1), padding_mode='reflect'),
-            # RandomMotion(),
-            RandomBiasField(),
-            ZNormalization(),
-            RandomNoise(),
-            RandomFlip(axes=(0,)),
-            OneOf({
-                RandomAffine(): 0.8,
-                RandomElasticDeformation(): 0.2,
-            }),])
+            if hp.aug:
+                training_transform = Compose([
+                CropOrPad((hp.crop_or_pad_size), padding_mode='reflect'),
+                # RandomMotion(),
+                RandomBiasField(),
+                ZNormalization(),
+                RandomNoise(),
+                RandomFlip(axes=(0,)),
+                OneOf({
+                    RandomAffine(): 0.8,
+                    RandomElasticDeformation(): 0.2,
+                }),])
+            else:
+                training_transform = Compose([
+                CropOrPad((hp.crop_or_pad_size, hp.crop_or_pad_size, hp.crop_or_pad_size), padding_mode='reflect'),
+                ZNormalization(),
+                ])
+
         else:
             raise Exception('no such kind of mode!')
 
@@ -195,16 +208,6 @@ class MedData_test(torch.utils.data.Dataset):
 
         self.training_set = tio.SubjectsDataset(self.subjects, transform=None)
 
-
-    # def transform(self):
-
-    #     training_transform = Compose([
-    #     ZNormalization(),
-    #     ])
-        
-
-
-    #     return training_transform
 
 
 
