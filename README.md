@@ -18,14 +18,8 @@
 * You can modify **hparam.py** to determine whether 2D or 3D segmentation and whether multicategorization is possible.
 * We provide algorithms for almost all 2D and 3D segmentation.
 * This repository is compatible with almost all medical data formats(e.g. nii.gz, nii, mhd, nrrd, ...), by modifying **fold_arch** in **hparam.py** of the config.
-* If you want to use a **multi-category** program, please modify the following codes yourself. I cannot identify your specific categories.
-    * https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/48edef7751af8551b7432b5491f4cf1964bd0cfc/hparam.py#L6
-    * https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/48edef7751af8551b7432b5491f4cf1964bd0cfc/main.py#L235
-    * https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/48edef7751af8551b7432b5491f4cf1964bd0cfc/main.py#L336
-    * https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/48edef7751af8551b7432b5491f4cf1964bd0cfc/main.py#L496
-    * https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/48edef7751af8551b7432b5491f4cf1964bd0cfc/data_function.py#L69
-    * https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/48edef7751af8551b7432b5491f4cf1964bd0cfc/data_function.py#L167
-* Whether in 2D or 3D, this project is processed using **patch**. Therefore, images do not have to be strictly the same size. 
+* If you want to use a **multi-category** program, please modify the corresponding codes by yourself. I cannot identify your specific categories.
+* Whether in 2D or 3D, this project is processed using **patch**. Therefore, images do not have to be strictly the same size. In 2D, however, you should set the patch large enough.
 
 ## Prepare Your Dataset
 ### Example1
