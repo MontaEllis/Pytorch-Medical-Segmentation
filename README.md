@@ -7,6 +7,7 @@
 * 2021.2.24 A video tutorial was released(https://www.bilibili.com/video/BV1gp4y1H7kq/).
 * 2021.5.16 A bug in Unet3D implement was fixed.
 * 2021.5.16 The metric code is released.
+* 2021.6.24 All parameters can be adjusted in hparam.py.
 
 ## Requirements
 * pytorch1.7

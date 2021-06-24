@@ -8,6 +8,7 @@
 * 2021.2.24 发布一个视频教程(https://www.bilibili.com/video/BV1gp4y1H7kq/)。
 * 2021.5.16 修复Unet3D实现的错误。
 * 2021.5.16 评估代码公布。
+* 2021.6.24 所有参数都能在hparam.py中调整。
 
 ## 环境要求
 * pytorch1.7
