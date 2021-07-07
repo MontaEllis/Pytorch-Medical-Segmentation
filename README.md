@@ -8,6 +8,7 @@
 * 2021.5.16 A bug in Unet3D implement was fixed.
 * 2021.5.16 The metric code is released.
 * 2021.6.24 All parameters can be adjusted in hparam.py.
+* 2021.7.7 Now you can refer medical classification in [Pytorch-Medical-Classification](https://github.com/MontaEllis/Pytorch-Medical-Classification)
 
 ## Requirements
 * pytorch1.7

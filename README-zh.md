@@ -9,6 +9,7 @@
 * 2021.5.16 修复Unet3D实现的错误。
 * 2021.5.16 评估代码公布。
 * 2021.6.24 所有参数都能在hparam.py中调整。
+* 2021.7.7 现在你可以参考医学分类程序: [Pytorch-Medical-Classification](https://github.com/MontaEllis/Pytorch-Medical-Classification)
 
 ## 环境要求
 * pytorch1.7
