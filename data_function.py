@@ -115,7 +115,7 @@ class MedData_train(torch.utils.data.Dataset):
                 training_transform = Compose([
                 # ToCanonical(),
                 CropOrPad((hp.crop_or_pad_size), padding_mode='reflect'),
-                RandomMotion(),
+                # RandomMotion(),
                 RandomBiasField(),
                 ZNormalization(),
                 RandomNoise(),
