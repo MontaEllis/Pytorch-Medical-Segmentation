@@ -404,9 +404,12 @@ def test():
         # model = PSPNet(in_class=hp.in_class,n_classes=hp.out_class)
 
     elif hp.mode == '3d':
-        from models.three_d.unet3d import UNet
-        model = UNet(in_channels=hp.in_class, n_classes=hp.out_class, base_n_filter=2)
+        from models.three_d.unet3d import UNet3D
+        model = UNet3D(in_channels=hp.in_class, out_channels=hp.out_class, init_features=32)
 
+        # from models.three_d.residual_unet3d import UNet
+        # model = UNet(in_channels=hp.in_class, n_classes=hp.out_class, base_n_filter=2)
+        
         #from models.three_d.fcn3d import FCN_Net
         #model = FCN_Net(in_channels =hp.in_class,n_class =hp.out_class)
 
