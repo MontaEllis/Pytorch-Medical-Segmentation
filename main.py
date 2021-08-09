@@ -495,42 +495,41 @@ def test():
         affine = subj['source']['affine']
         if (hp.in_class == 1) and (hp.out_class == 1) :
             label_image = torchio.ScalarImage(tensor=output_tensor.numpy(), affine=affine)
-            label_image.save(os.path.join(output_dir_test,f"{str(i):04d}-result_float"+hp.save_arch))
+            label_image.save(os.path.join(output_dir_test,f"{i:04d}-result_float"+hp.save_arch))
 
             # f"{str(i):04d}-result_float.mhd"
 
             output_image = torchio.ScalarImage(tensor=output_tensor_1.numpy(), affine=affine)
-            output_image.save(os.path.join(output_dir_test,f"{str(i):04d}-result_int"+hp.save_arch))
+            output_image.save(os.path.join(output_dir_test,f"{i:04d}-result_int"+hp.save_arch))
         else:
             output_tensor = output_tensor.unsqueeze(1)
             output_tensor_1= output_tensor_1.unsqueeze(1)
 
             output_image_artery_float = torchio.ScalarImage(tensor=output_tensor[0].numpy(), affine=affine)
-            output_image_artery_float.save(os.path.join(output_dir_test,f"{str(i):04d}-result_float_artery"+hp.save_arch))
+            output_image_artery_float.save(os.path.join(output_dir_test,f"{i:04d}-result_float_artery"+hp.save_arch))
             # f"{str(i):04d}-result_float_artery.mhd"
 
             output_image_artery_int = torchio.ScalarImage(tensor=output_tensor_1[0].numpy(), affine=affine)
-            output_image_artery_int.save(os.path.join(output_dir_test,f"{str(i):04d}-result_int_artery"+hp.save_arch))
+            output_image_artery_int.save(os.path.join(output_dir_test,f"{i:04d}-result_int_artery"+hp.save_arch))
 
             output_image_lung_float = torchio.ScalarImage(tensor=output_tensor[1].numpy(), affine=affine)
-            output_image_lung_float.save(os.path.join(output_dir_test,f"{str(i):04d}-result_float_lung"+hp.save_arch))
+            output_image_lung_float.save(os.path.join(output_dir_test,f"{i:04d}-result_float_lung"+hp.save_arch))
             
 
             output_image_lung_int = torchio.ScalarImage(tensor=output_tensor_1[1].numpy(), affine=affine)
-            output_image_lung_int.save(os.path.join(output_dir_test,f"{str(i):04d}-result_int_lung"+hp.save_arch))
+            output_image_lung_int.save(os.path.join(output_dir_test,f"{i:04d}-result_int_lung"+hp.save_arch))
 
             output_image_trachea_float = torchio.ScalarImage(tensor=output_tensor[2].numpy(), affine=affine)
-            output_image_trachea_float.save(os.path.join(output_dir_test,f"{str(i):04d}-result_float_trachea"+hp.save_arch))
+            output_image_trachea_float.save(os.path.join(output_dir_test,f"{i:04d}-result_float_trachea"+hp.save_arch))
 
             output_image_trachea_int = torchio.ScalarImage(tensor=output_tensor_1[2].numpy(), affine=affine)
-            output_image_trachea_int.save(os.path.join(output_dir_test,f"{str(i):04d}-result_int_trachea"+hp.save_arch))
+            output_image_trachea_int.save(os.path.join(output_dir_test,f"{i:04d}-result_int_trachea"+hp.save_arch))
 
             output_image_vein_float = torchio.ScalarImage(tensor=output_tensor[3].numpy(), affine=affine)
-            output_image_vein_float.save(os.path.join(output_dir_test,f"{str(i):04d}-result_float_vein"+hp.save_arch))
+            output_image_vein_float.save(os.path.join(output_dir_test,f"{i:04d}-result_float_vein"+hp.save_arch))
 
             output_image_vein_int = torchio.ScalarImage(tensor=output_tensor_1[3].numpy(), affine=affine)
-            output_image_vein_int.save(os.path.join(output_dir_test,f"{str(i):04d}-result_int_vein"+hp.save_arch))           
-
+            output_image_vein_int.save(os.path.join(output_dir_test,f"{i:04d}-result_int_vein"+hp.save_arch))           
 
    
 
