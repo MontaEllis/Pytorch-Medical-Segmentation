@@ -42,7 +42,7 @@ class MedData_train(torch.utils.data.Dataset):
         if hp.mode == '3d':
             patch_size = hp.patch_size
         elif hp.mode == '2d':
-            patch_size = (hp.patch_size,hp.patch_size,1)
+            patch_size = hp.patch_size
         else:
             raise Exception('no such kind of mode!')
 
@@ -126,7 +126,7 @@ class MedData_train(torch.utils.data.Dataset):
                 }),])
             else:
                 training_transform = Compose([
-                CropOrPad((hp.crop_or_pad_size, hp.crop_or_pad_size, hp.crop_or_pad_size), padding_mode='reflect'),
+                CropOrPad((hp.crop_or_pad_size), padding_mode='reflect'),
                 ZNormalization(),
                 ])
         elif hp.mode == '2d':
@@ -144,7 +144,7 @@ class MedData_train(torch.utils.data.Dataset):
                 }),])
             else:
                 training_transform = Compose([
-                CropOrPad((hp.crop_or_pad_size, hp.crop_or_pad_size, hp.crop_or_pad_size), padding_mode='reflect'),
+                CropOrPad((hp.crop_or_pad_size), padding_mode='reflect'),
                 ZNormalization(),
                 ])
 

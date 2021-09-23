@@ -90,35 +90,33 @@ def train():
     os.makedirs(args.output_dir, exist_ok=True)
 
     if hp.mode == '2d':
-        from models.two_d.unet import Unet
-        model = Unet(in_channels=hp.in_class, classes=hp.out_class)
+        #from models.two_d.unet import Unet
+        #model = Unet(in_channels=hp.in_class, classes=hp.out_class)
 
-        # from models.two_d.miniseg import MiniSeg
-        # model = MiniSeg(in_input=hp.in_class, classes=hp.out_class)
+        from models.two_d.miniseg import MiniSeg
+        model = MiniSeg(in_input=hp.in_class, classes=hp.out_class)
 
-        # from models.two_d.fcn import FCN32s as fcn
-        # model = fcn(in_class =hp.in_class,n_class=hp.out_class)
+        #from models.two_d.fcn import FCN32s as fcn
+        #model = fcn(in_class =hp.in_class,n_class=hp.out_class)
 
         # from models.two_d.segnet import SegNet
         # model = SegNet(input_nbr=hp.in_class,label_nbr=hp.out_class)
 
-        # from models.two_d.deeplab import DeepLabV3
-        # model = DeepLabV3(in_class=hp.in_class,class_num=hp.out_class)
+        #from models.two_d.deeplab import DeepLabV3
+        #model = DeepLabV3(in_class=hp.in_class,class_num=hp.out_class)
 
-        # from models.two_d.unetpp import ResNet34UnetPlus
-        # model = ResNet34UnetPlus(num_channels=hp.in_class,num_class=hp.out_class)
+        #from models.two_d.unetpp import ResNet34UnetPlus
+        #model = ResNet34UnetPlus(num_channels=hp.in_class,num_class=hp.out_class)
 
-        # from models.two_d.pspnet import PSPNet
-        # model = PSPNet(in_class=hp.in_class,n_classes=hp.out_class)
+        #from models.two_d.pspnet import PSPNet
+        #model = PSPNet(in_class=hp.in_class,n_classes=hp.out_class)
 
     elif hp.mode == '3d':
+        #from models.three_d.unet3d import UNet3D
+        #model = UNet3D(in_channels=hp.in_class, out_channels=hp.out_class, init_features=32)
 
-        from models.three_d.unet3d import UNet3D
-        model = UNet3D(in_channels=hp.in_class, out_channels=hp.out_class, init_features=32)
-
-
-        # from models.three_d.residual_unet3d import UNet
-        # model = UNet(in_channels=hp.in_class, n_classes=hp.out_class, base_n_filter=2)
+        from models.three_d.residual_unet3d import UNet
+        model = UNet(in_channels=hp.in_class, n_classes=hp.out_class, base_n_filter=2)
 
         #from models.three_d.fcn3d import FCN_Net
         #model = FCN_Net(in_channels =hp.in_class,n_class =hp.out_class)
@@ -211,10 +209,11 @@ def train():
                 x = batch['source']['data']
                 y = batch['label']['data']
 
+                #y[y!=0] = 1 
+
                 x = x.type(torch.FloatTensor).cuda()
                 y = y.type(torch.FloatTensor).cuda()
-
-
+                
             else:
                 x = batch['source']['data']
                 y_atery = batch['atery']['data']
@@ -233,9 +232,9 @@ def train():
                 y = y.squeeze(4)
 
                 y[y!=0] = 1
-
-            # print(y.max())
-
+                
+                #print(y.max())
+                
             outputs = model(x)
 
 
@@ -308,13 +307,11 @@ def train():
                     x = x.unsqueeze(4)
                     y = y.unsqueeze(4)
                     outputs = outputs.unsqueeze(4)
-
-
+                    
                 x = x[0].cpu().detach().numpy()
                 y = y[0].cpu().detach().numpy()
                 outputs = outputs[0].cpu().detach().numpy()
                 affine = batch['source']['affine'][0].numpy()
-
 
 
 
@@ -382,29 +379,32 @@ def test():
     os.makedirs(output_dir_test, exist_ok=True)
 
     if hp.mode == '2d':
-        from models.two_d.unet import Unet
-        model = Unet(in_channels=hp.in_class, classes=hp.out_class)
+        #from models.two_d.unet import Unet
+        #model = Unet(in_channels=hp.in_class, classes=hp.out_class)
 
-        # from models.two_d.miniseg import MiniSeg
-        # model = MiniSeg(in_input=hp.in_class, classes=hp.out_class)
+        from models.two_d.miniseg import MiniSeg
+        model = MiniSeg(in_input=hp.in_class, classes=hp.out_class)
 
-        # from models.two_d.fcn import FCN32s as fcn
-        # model = fcn(in_class =hp.in_class,n_class=hp.out_class)
+        #from models.two_d.fcn import FCN32s as fcn
+        #model = fcn(in_class =hp.in_class,n_class=hp.out_class)
 
         # from models.two_d.segnet import SegNet
         # model = SegNet(input_nbr=hp.in_class,label_nbr=hp.out_class)
 
-        # from models.two_d.deeplab import DeepLabV3
-        # model = DeepLabV3(in_class=hp.in_class,class_num=hp.out_class)
+        #from models.two_d.deeplab import DeepLabV3
+        #model = DeepLabV3(in_class=hp.in_class,class_num=hp.out_class)
 
-        # from models.two_d.unetpp import ResNet34UnetPlus
-        # model = ResNet34UnetPlus(num_channels=hp.in_class,num_class=hp.out_class)
+        #from models.two_d.unetpp import ResNet34UnetPlus
+        #model = ResNet34UnetPlus(num_channels=hp.in_class,num_class=hp.out_class)
 
-        # from models.two_d.pspnet import PSPNet
-        # model = PSPNet(in_class=hp.in_class,n_classes=hp.out_class)
+        #from models.two_d.pspnet import PSPNet
+        #model = PSPNet(in_class=hp.in_class,n_classes=hp.out_class)
 
     elif hp.mode == '3d':
-        from models.three_d.unet3d import UNet
+        #from models.three_d.unet3d import UNet3D
+        #model = UNet3D(in_channels=hp.in_class, out_channels=hp.out_class, init_features=32)
+
+        from models.three_d.residual_unet3d import UNet
         model = UNet(in_channels=hp.in_class, n_classes=hp.out_class, base_n_filter=2)
 
         #from models.three_d.fcn3d import FCN_Net
@@ -425,7 +425,7 @@ def test():
 
 
 
-    model = torch.nn.DataParallel(model, device_ids=devicess,output_device=[1])
+    model = torch.nn.DataParallel(model, device_ids=devicess)
 
 
     print("load model:", args.ckpt)
@@ -458,7 +458,7 @@ def test():
                 patch_overlap,
             )
 
-        patch_loader = torch.utils.data.DataLoader(grid_sampler, batch_size=16)
+        patch_loader = torch.utils.data.DataLoader(grid_sampler, batch_size=args.batch)
         aggregator = torchio.inference.GridAggregator(grid_sampler)
         aggregator_1 = torchio.inference.GridAggregator(grid_sampler)
         model.eval()
@@ -492,41 +492,41 @@ def test():
         affine = subj['source']['affine']
         if (hp.in_class == 1) and (hp.out_class == 1) :
             label_image = torchio.ScalarImage(tensor=output_tensor.numpy(), affine=affine)
-            label_image.save(os.path.join(output_dir_test,f"{str(i):04d}-result_float"+hp.save_arch))
+            label_image.save(os.path.join(output_dir_test,f"{i:04d}-result_float"+hp.save_arch))
 
             # f"{str(i):04d}-result_float.mhd"
 
             output_image = torchio.ScalarImage(tensor=output_tensor_1.numpy(), affine=affine)
-            output_image.save(os.path.join(output_dir_test,f"{str(i):04d}-result_int"+hp.save_arch))
+            output_image.save(os.path.join(output_dir_test,f"{i:04d}-result_int"+hp.save_arch))
         else:
             output_tensor = output_tensor.unsqueeze(1)
             output_tensor_1= output_tensor_1.unsqueeze(1)
 
             output_image_artery_float = torchio.ScalarImage(tensor=output_tensor[0].numpy(), affine=affine)
-            output_image_artery_float.save(os.path.join(output_dir_test,f"{str(i):04d}-result_float_artery"+hp.save_arch))
+            output_image_artery_float.save(os.path.join(output_dir_test,f"{i:04d}-result_float_artery"+hp.save_arch))
             # f"{str(i):04d}-result_float_artery.mhd"
 
             output_image_artery_int = torchio.ScalarImage(tensor=output_tensor_1[0].numpy(), affine=affine)
-            output_image_artery_int.save(os.path.join(output_dir_test,f"{str(i):04d}-result_int_artery"+hp.save_arch))
+            output_image_artery_int.save(os.path.join(output_dir_test,f"{i:04d}-result_int_artery"+hp.save_arch))
 
             output_image_lung_float = torchio.ScalarImage(tensor=output_tensor[1].numpy(), affine=affine)
-            output_image_lung_float.save(os.path.join(output_dir_test,f"{str(i):04d}-result_float_lung"+hp.save_arch))
+            output_image_lung_float.save(os.path.join(output_dir_test,f"{i:04d}-result_float_lung"+hp.save_arch))
             
 
             output_image_lung_int = torchio.ScalarImage(tensor=output_tensor_1[1].numpy(), affine=affine)
-            output_image_lung_int.save(os.path.join(output_dir_test,f"{str(i):04d}-result_int_lung"+hp.save_arch))
+            output_image_lung_int.save(os.path.join(output_dir_test,f"{i:04d}-result_int_lung"+hp.save_arch))
 
             output_image_trachea_float = torchio.ScalarImage(tensor=output_tensor[2].numpy(), affine=affine)
-            output_image_trachea_float.save(os.path.join(output_dir_test,f"{str(i):04d}-result_float_trachea"+hp.save_arch))
+            output_image_trachea_float.save(os.path.join(output_dir_test,f"{i:04d}-result_float_trachea"+hp.save_arch))
 
             output_image_trachea_int = torchio.ScalarImage(tensor=output_tensor_1[2].numpy(), affine=affine)
-            output_image_trachea_int.save(os.path.join(output_dir_test,f"{str(i):04d}-result_int_trachea"+hp.save_arch))
+            output_image_trachea_int.save(os.path.join(output_dir_test,f"{i:04d}-result_int_trachea"+hp.save_arch))
 
             output_image_vein_float = torchio.ScalarImage(tensor=output_tensor[3].numpy(), affine=affine)
-            output_image_vein_float.save(os.path.join(output_dir_test,f"{str(i):04d}-result_float_vein"+hp.save_arch))
+            output_image_vein_float.save(os.path.join(output_dir_test,f"{i:04d}-result_float_vein"+hp.save_arch))
 
             output_image_vein_int = torchio.ScalarImage(tensor=output_tensor_1[3].numpy(), affine=affine)
-            output_image_vein_int.save(os.path.join(output_dir_test,f"{str(i):04d}-result_int_vein"+hp.save_arch))           
+            output_image_vein_int.save(os.path.join(output_dir_test,f"{i:04d}-result_int_vein"+hp.save_arch))           
 
 
    
