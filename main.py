@@ -133,6 +133,8 @@ def train():
         #from models.three_d.vnet3d import VNet
         #model = VNet(in_channels=hp.in_class, classes=hp.out_class)
 
+        #from models.three_d.unetr import UNETR
+        #model = UNETR(img_shape=(hp.crop_or_pad_size), input_dim=hp.in_class, output_dim=hp.out_class)
 
 
 
@@ -422,7 +424,8 @@ def test():
         #from models.three_d.vnet3d import VNet
         #model = VNet(in_channels=hp.in_class, classes=hp.out_class)
 
-
+        #from models.three_d.unetr import UNETR
+        #model = UNETR(img_shape=(hp.crop_or_pad_size), input_dim=hp.in_class, output_dim=hp.out_class)
 
 
     model = torch.nn.DataParallel(model, device_ids=devicess)

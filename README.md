@@ -139,6 +139,7 @@ python main.py
 - [x] vnet3d
 - [x] highresnert(copy from https://github.com/fepegar/highresnet, Thank you to [fepegar](https://github.com/fepegar) for your generosity!)
 - [x] densenet3d
+- [x] unetr (copy from https://github.com/tamasino52/UNETR)
 
 ### Metric
 - [x] metrics.py to evaluate your results
