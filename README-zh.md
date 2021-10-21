@@ -158,3 +158,11 @@ python main.py
 
 ## 致谢
 这个项目是一个非官方PyTorch实现的3D和2D医学分割，高度依赖于[MedicalZooPytorch](https://github.com/black0017/MedicalZooPytorch)和[torchio](https://github.com/fepegar/torchio)。感谢上述项目。感谢[Cheng Chen](b20170310@xs.ustb.edu.cn), [Youming Zhang](zhangym0820@csu.edu.cn), [Daiheng Gao](https://github.com/tomguluson92), [Jie Zhang](jpeter.zhang@connect.polyu.hk), [Xing Tao](kakatao@foxmail.com), [Weili Jiang](1379252229@qq.com)和[Shanshan Li](https://github.com/ssli23) 对我的帮助。
+
+
+## 相关工作
+如果这些代码对您有帮助，您可以引用下列论文，谢谢。
+```
+[1] Chen C, Zhou K. An Effective Deep Neural Network for Lung Lesions Segmentation from COVID-19 CT Images[J]. IEEE Transactions on Industrial Informatics, 2021.
+[2] Chen C, Zhang T, et al. Pathological lung segmentation in chest CT images based on improved random walker[J]. Computer Methods and Programs in Biomedicine, 2021, 200: 105864.
+```
