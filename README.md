@@ -155,7 +155,7 @@ This project is not perfect and there are still many problems. If you are using 
 ## Acknowledgements
 This repository is an unoffical PyTorch implementation of Medical segmentation in 3D and 2D and highly based on [MedicalZooPytorch](https://github.com/black0017/MedicalZooPytorch) and [torchio](https://github.com/fepegar/torchio).Thank you for the above repo. Thank you to [Cheng Chen](b20170310@xs.ustb.edu.cn), [Youming Zhang](zhangym0820@csu.edu.cn), [Daiheng Gao](https://github.com/tomguluson92), [Jie Zhang](jpeter.zhang@connect.polyu.hk), [Xing Tao](kakatao@foxmail.com), [Weili Jiang](1379252229@qq.com) and [Shanshan Li](https://github.com/ssli23) for all the help I received.
 
-## Relatex works
+## Related works
 If this code is helpful for you, you can cite these for us. Thank you.
 ```
 [1] Chen C, Zhou K. An Effective Deep Neural Network for Lung Lesions Segmentation from COVID-19 CT Images[J]. IEEE Transactions on Industrial Informatics, 2021.
