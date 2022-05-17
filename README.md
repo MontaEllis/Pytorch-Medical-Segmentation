@@ -9,6 +9,8 @@
 * 2021.5.16 The metric code is released.
 * 2021.6.24 All parameters can be adjusted in hparam.py.
 * 2021.7.7 Now you can refer medical classification in [Pytorch-Medical-Classification](https://github.com/MontaEllis/Pytorch-Medical-Classification)
+* 2022.5.15 Now you can refer semi-supervised learning on medical segmentation in [SSL-For-Medical-Segmentation](https://github.com/MontaEllis/SSL-For-Medical-Segmentation)
+* 2022.5.17 We update the training and inference code and fix some bugs.
 
 ## Requirements
 * pytorch1.7

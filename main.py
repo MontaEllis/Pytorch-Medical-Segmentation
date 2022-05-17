@@ -91,50 +91,50 @@ def train():
 
     if hp.mode == '2d':
         #from models.two_d.unet import Unet
-        #model = Unet(in_channels=hp.in_class, classes=hp.out_class)
+        #model = Unet(in_channels=hp.in_class, classes=hp.out_class+1)
 
         from models.two_d.miniseg import MiniSeg
-        model = MiniSeg(in_input=hp.in_class, classes=hp.out_class)
+        model = MiniSeg(in_input=hp.in_class, classes=hp.out_class+1)
 
         #from models.two_d.fcn import FCN32s as fcn
-        #model = fcn(in_class =hp.in_class,n_class=hp.out_class)
+        #model = fcn(in_class =hp.in_class,n_class=hp.out_class+1)
 
         # from models.two_d.segnet import SegNet
-        # model = SegNet(input_nbr=hp.in_class,label_nbr=hp.out_class)
+        # model = SegNet(input_nbr=hp.in_class,label_nbr=hp.out_class+1)
 
         #from models.two_d.deeplab import DeepLabV3
-        #model = DeepLabV3(in_class=hp.in_class,class_num=hp.out_class)
+        #model = DeepLabV3(in_class=hp.in_class,class_num=hp.out_class+1)
 
         #from models.two_d.unetpp import ResNet34UnetPlus
-        #model = ResNet34UnetPlus(num_channels=hp.in_class,num_class=hp.out_class)
+        #model = ResNet34UnetPlus(num_channels=hp.in_class,num_class=hp.out_class+1)
 
         #from models.two_d.pspnet import PSPNet
-        #model = PSPNet(in_class=hp.in_class,n_classes=hp.out_class)
+        #model = PSPNet(in_class=hp.in_class,n_classes=hp.out_class+1)
 
     elif hp.mode == '3d':
         #from models.three_d.unet3d import UNet3D
-        #model = UNet3D(in_channels=hp.in_class, out_channels=hp.out_class, init_features=32)
+        #model = UNet3D(in_channels=hp.in_class, out_channels=hp.out_class+1, init_features=32)
 
         from models.three_d.residual_unet3d import UNet
-        model = UNet(in_channels=hp.in_class, n_classes=hp.out_class, base_n_filter=2)
+        model = UNet(in_channels=hp.in_class, n_classes=hp.out_class+1, base_n_filter=2)
 
         #from models.three_d.fcn3d import FCN_Net
-        #model = FCN_Net(in_channels =hp.in_class,n_class =hp.out_class)
+        #model = FCN_Net(in_channels =hp.in_class,n_class =hp.out_class+1)
 
         #from models.three_d.highresnet import HighRes3DNet
-        #model = HighRes3DNet(in_channels=hp.in_class,out_channels=hp.out_class)
+        #model = HighRes3DNet(in_channels=hp.in_class,out_channels=hp.out_class+1)
 
         #from models.three_d.densenet3d import SkipDenseNet3D
-        #model = SkipDenseNet3D(in_channels=hp.in_class, classes=hp.out_class)
+        #model = SkipDenseNet3D(in_channels=hp.in_class, classes=hp.out_class+1)
 
         # from models.three_d.densevoxelnet3d import DenseVoxelNet
-        # model = DenseVoxelNet(in_channels=hp.in_class, classes=hp.out_class)
+        # model = DenseVoxelNet(in_channels=hp.in_class, classes=hp.out_class+1)
 
         #from models.three_d.vnet3d import VNet
-        #model = VNet(in_channels=hp.in_class, classes=hp.out_class)
+        #model = VNet(in_channels=hp.in_class, classes=hp.out_class+1)
 
         #from models.three_d.unetr import UNETR
-        #model = UNETR(img_shape=(hp.crop_or_pad_size), input_dim=hp.in_class, output_dim=hp.out_class)
+        #model = UNETR(img_shape=(hp.crop_or_pad_size), input_dim=hp.in_class, output_dim=hp.out_class+1)
 
 
 
@@ -212,8 +212,13 @@ def train():
                 y = batch['label']['data']
 
                 #y[y!=0] = 1 
+                y_back = torch.zeros_like(y)
+                # y_back[(y==0) ^ (y_L_TL==0) ^ (y_R_TL==0)]=1
+                y_back[(y==0)]=1
+
 
                 x = x.type(torch.FloatTensor).cuda()
+                y = torch.cat((y_back, y),1) 
                 y = y.type(torch.FloatTensor).cuda()
                 
             else:
@@ -223,9 +228,14 @@ def train():
                 y_trachea = batch['trachea']['data']
                 y_vein = batch['atery']['data']
 
+
+                y_back = torch.zeros_like(y_atery)
+                y_back[(y_atery==0) ^ (y_lung==0) ^ (y_trachea==0) ^ (y_vein==0)]=1
+
+
                 x = x.type(torch.FloatTensor).cuda()
 
-                y = torch.cat((y_atery,y_lung,y_trachea,y_vein),1) 
+                y = torch.cat((y_back,y_atery,y_lung,y_trachea,y_vein),1) 
                 y = y.type(torch.FloatTensor).cuda()
 
 
@@ -233,7 +243,7 @@ def train():
                 x = x.squeeze(4)
                 y = y.squeeze(4)
 
-                y[y!=0] = 1
+            y[y!=0] = 1
                 
                 #print(y.max())
                 
@@ -241,13 +251,17 @@ def train():
 
 
             # for metrics
-            logits = torch.sigmoid(outputs)
-            labels = logits.clone()
-            labels[labels>0.5] = 1
-            labels[labels<=0.5] = 0
-
-
+            labels = outputs.argmax(dim=1)
+            model_output_one_hot = torch.nn.functional.one_hot(labels, num_classes=hp.out_class+1).permute(0,4,1,2,3)
             loss = criterion(outputs, y)
+
+
+            # logits = torch.sigmoid(outputs)
+            # labels = logits.clone()
+            # labels[labels>0.5] = 1
+            # labels[labels<=0.5] = 0
+
+
 
             num_iters += 1
             loss.backward()
@@ -256,7 +270,16 @@ def train():
             iteration += 1
 
 
-            false_positive_rate,false_negtive_rate,dice = metric(y.cpu(),labels.cpu())
+
+            y_argmax = y.argmax(dim=1)
+            y_one_hot = torch.nn.functional.one_hot(y_argmax, num_classes=hp.out_class+1).permute(0,4,1,2,3)
+ 
+            false_positive_rate,false_negtive_rate,dice = metric(y_one_hot[:,1:,:,:].cpu(),model_output_one_hot[:,1:,:,:].cpu())
+    
+
+
+
+            # false_positive_rate,false_negtive_rate,dice = metric(y.cpu(),labels.cpu())
             ## log
             writer.add_scalar('Training/Loss', loss.item(),iteration)
             writer.add_scalar('Training/false_positive_rate', false_positive_rate,iteration)
@@ -313,20 +336,25 @@ def train():
                 x = x[0].cpu().detach().numpy()
                 y = y[0].cpu().detach().numpy()
                 outputs = outputs[0].cpu().detach().numpy()
+                model_output_one_hot = model_output_one_hot[0].float().cpu().detach().numpy()
                 affine = batch['source']['affine'][0].numpy()
 
 
 
 
                 if (hp.in_class == 1) and (hp.out_class == 1) :
+                    y = np.expand_dims(y, axis=1)
+                    outputs = np.expand_dims(outputs, axis=1)
+                    model_output_one_hot = np.expand_dims(model_output_one_hot, axis=1)
+
                     source_image = torchio.ScalarImage(tensor=x, affine=affine)
                     source_image.save(os.path.join(args.output_dir,f"step-{epoch:04d}-source"+hp.save_arch))
                     # source_image.save(os.path.join(args.output_dir,("step-{}-source.mhd").format(epoch)))
 
-                    label_image = torchio.ScalarImage(tensor=y, affine=affine)
+                    label_image = torchio.ScalarImage(tensor=y[1], affine=affine)
                     label_image.save(os.path.join(args.output_dir,f"step-{epoch:04d}-gt"+hp.save_arch))
 
-                    output_image = torchio.ScalarImage(tensor=outputs, affine=affine)
+                    output_image = torchio.ScalarImage(tensor=model_output_one_hot[1], affine=affine)
                     output_image.save(os.path.join(args.output_dir,f"step-{epoch:04d}-predict"+hp.save_arch))
                 else:
                     y = np.expand_dims(y, axis=1)
@@ -382,50 +410,50 @@ def test():
 
     if hp.mode == '2d':
         #from models.two_d.unet import Unet
-        #model = Unet(in_channels=hp.in_class, classes=hp.out_class)
+        #model = Unet(in_channels=hp.in_class, classes=hp.out_class+1)
 
         from models.two_d.miniseg import MiniSeg
-        model = MiniSeg(in_input=hp.in_class, classes=hp.out_class)
+        model = MiniSeg(in_input=hp.in_class, classes=hp.out_class+1)
 
         #from models.two_d.fcn import FCN32s as fcn
-        #model = fcn(in_class =hp.in_class,n_class=hp.out_class)
+        #model = fcn(in_class =hp.in_class,n_class=hp.out_class+1)
 
         # from models.two_d.segnet import SegNet
-        # model = SegNet(input_nbr=hp.in_class,label_nbr=hp.out_class)
+        # model = SegNet(input_nbr=hp.in_class,label_nbr=hp.out_class+1)
 
         #from models.two_d.deeplab import DeepLabV3
-        #model = DeepLabV3(in_class=hp.in_class,class_num=hp.out_class)
+        #model = DeepLabV3(in_class=hp.in_class,class_num=hp.out_class+1)
 
         #from models.two_d.unetpp import ResNet34UnetPlus
-        #model = ResNet34UnetPlus(num_channels=hp.in_class,num_class=hp.out_class)
+        #model = ResNet34UnetPlus(num_channels=hp.in_class,num_class=hp.out_class+1)
 
         #from models.two_d.pspnet import PSPNet
-        #model = PSPNet(in_class=hp.in_class,n_classes=hp.out_class)
+        #model = PSPNet(in_class=hp.in_class,n_classes=hp.out_class+1)
 
     elif hp.mode == '3d':
         #from models.three_d.unet3d import UNet3D
         #model = UNet3D(in_channels=hp.in_class, out_channels=hp.out_class, init_features=32)
 
         from models.three_d.residual_unet3d import UNet
-        model = UNet(in_channels=hp.in_class, n_classes=hp.out_class, base_n_filter=2)
+        model = UNet(in_channels=hp.in_class, n_classes=hp.out_class+1, base_n_filter=2)
 
         #from models.three_d.fcn3d import FCN_Net
-        #model = FCN_Net(in_channels =hp.in_class,n_class =hp.out_class)
+        #model = FCN_Net(in_channels =hp.in_class,n_class =hp.out_class+1)
 
         #from models.three_d.highresnet import HighRes3DNet
-        #model = HighRes3DNet(in_channels=hp.in_class,out_channels=hp.out_class)
+        #model = HighRes3DNet(in_channels=hp.in_class,out_channels=hp.out_class+1)
 
         #from models.three_d.densenet3d import SkipDenseNet3D
-        #model = SkipDenseNet3D(in_channels=hp.in_class, classes=hp.out_class)
+        #model = SkipDenseNet3D(in_channels=hp.in_class, classes=hp.out_class+1)
 
         # from models.three_d.densevoxelnet3d import DenseVoxelNet
-        # model = DenseVoxelNet(in_channels=hp.in_class, classes=hp.out_class)
+        # model = DenseVoxelNet(in_channels=hp.in_class, classes=hp.out_class+1)
 
         #from models.three_d.vnet3d import VNet
-        #model = VNet(in_channels=hp.in_class, classes=hp.out_class)
+        #model = VNet(in_channels=hp.in_class, classes=hp.out_class+1)
 
         #from models.three_d.unetr import UNETR
-        #model = UNETR(img_shape=(hp.crop_or_pad_size), input_dim=hp.in_class, output_dim=hp.out_class)
+        #model = UNETR(img_shape=(hp.crop_or_pad_size), input_dim=hp.in_class, output_dim=hp.out_class+1)
 
 
     model = torch.nn.DataParallel(model, device_ids=devicess)
@@ -462,7 +490,7 @@ def test():
             )
 
         patch_loader = torch.utils.data.DataLoader(grid_sampler, batch_size=args.batch)
-        aggregator = torchio.inference.GridAggregator(grid_sampler)
+        # aggregator = torchio.inference.GridAggregator(grid_sampler)
         aggregator_1 = torchio.inference.GridAggregator(grid_sampler)
         model.eval()
         with torch.no_grad():
@@ -478,15 +506,18 @@ def test():
 
                 if hp.mode == '2d':
                     outputs = outputs.unsqueeze(4)
-                logits = torch.sigmoid(outputs)
 
-                labels = logits.clone()
-                labels[labels>0.5] = 1
-                labels[labels<=0.5] = 0
+                labels = outputs.argmax(dim=1)
+                # model_output_one_hot = torch.nn.functional.one_hot(labels, num_classes=hp.out_class+1).permute(0,4,1,2,3)
+                # logits = torch.sigmoid(outputs)
 
-                aggregator.add_batch(logits, locations)
+                # labels = logits.clone()
+                # labels[labels>0.5] = 1
+                # labels[labels<=0.5] = 0
+
+                # aggregator.add_batch(model_output_one_hot, locations)
                 aggregator_1.add_batch(labels, locations)
-        output_tensor = aggregator.get_output_tensor()
+        # output_tensor = aggregator.get_output_tensor()
         output_tensor_1 = aggregator_1.get_output_tensor()
 
 
@@ -494,8 +525,8 @@ def test():
 
         affine = subj['source']['affine']
         if (hp.in_class == 1) and (hp.out_class == 1) :
-            label_image = torchio.ScalarImage(tensor=output_tensor.numpy(), affine=affine)
-            label_image.save(os.path.join(output_dir_test,f"{i:04d}-result_float"+hp.save_arch))
+            # label_image = torchio.ScalarImage(tensor=output_tensor.numpy(), affine=affine)
+            # label_image.save(os.path.join(output_dir_test,f"{i:04d}-result_float"+hp.save_arch))
 
             # f"{str(i):04d}-result_float.mhd"
 
