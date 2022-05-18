@@ -26,10 +26,10 @@ class hparams:
 
     save_arch = '.nii.gz'
 
-    # source_train_dir = 'train/image'
-    # label_train_dir = 'train/label'
-    # source_test_dir = 'test/image'
-    # label_test_dir = 'test/label'
+    source_train_dir = 'train/image'
+    label_train_dir = 'train/label'
+    source_test_dir = 'test/image'
+    label_test_dir = 'test/label'
 
 
     output_dir_test = 'results/your_program_name'
