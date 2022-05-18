@@ -1,6 +1,9 @@
 # Pytorch Medical Segmentation
 <i>Read Chinese Introduction：<a href='https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/master/README-zh.md'>Here！</a></i><br />
 
+## Notes
+We are planning a major update to the code in the near future, so if you have any suggestions, please feel free to email [me](elliszkn@163.com) or mention them in the issue.
+
 ## Recent Updates
 * 2021.1.8 The train and test codes are released.
 * 2021.2.6 A bug in dice was fixed with the help of [Shanshan Li](https://github.com/ssli23).

@@ -1,6 +1,8 @@
 # Pytorch Medical Segmentation
 <i>英文版请戳：<a href='https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/master/README.md'>这里！</a></i><br />
 
+## Notes
+我们计划在最近对代码进行一次大更新，如果您有任何建议，请随意给[我](elliszkn@163.com)发邮件或者在issue里提。
 
 ## 最近的更新
 * 2021.1.8 训练和测试代码已经发布
@@ -10,6 +12,9 @@
 * 2021.5.16 评估代码公布。
 * 2021.6.24 所有参数都能在hparam.py中调整。
 * 2021.7.7 现在你可以参考医学分类程序: [Pytorch-Medical-Classification](https://github.com/MontaEllis/Pytorch-Medical-Classification)
+* 2022.5.15 现在你可以参考半监督医学分割程序: [SSL-For-Medical-Segmentation](https://github.com/MontaEllis/SSL-For-Medical-Segmentation)
+* 2022.5.17 我们更新了训练和测试代码，修复了一些小bug。
+
 
 ## 环境要求
 * pytorch1.7
