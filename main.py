@@ -516,7 +516,7 @@ def test():
                 # labels[labels<=0.5] = 0
 
                 # aggregator.add_batch(model_output_one_hot, locations)
-                aggregator_1.add_batch(labels, locations)
+                aggregator_1.add_batch(labels.unsqueeze(1), locations)
         # output_tensor = aggregator.get_output_tensor()
         output_tensor_1 = aggregator_1.get_output_tensor()
 
