@@ -432,7 +432,7 @@ def test():
 
     elif hp.mode == '3d':
         #from models.three_d.unet3d import UNet3D
-        #model = UNet3D(in_channels=hp.in_class, out_channels=hp.out_class, init_features=32)
+        #model = UNet3D(in_channels=hp.in_class, out_channels=hp.out_class+1, init_features=32)
 
         from models.three_d.residual_unet3d import UNet
         model = UNet(in_channels=hp.in_class, n_classes=hp.out_class+1, base_n_filter=2)
