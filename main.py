@@ -167,7 +167,9 @@ def train():
     model.cuda()
 
     from loss_function import Binary_Loss,DiceLoss
-    criterion = Binary_Loss().cuda()
+    from torch.nn.modules.loss import CrossEntropyLoss
+    criterion_dice = DiceLoss(2).cuda()
+    criterion_ce = CrossEntropyLoss().cuda()
 
 
     writer = SummaryWriter(args.output_dir)
@@ -253,7 +255,10 @@ def train():
             # for metrics
             labels = outputs.argmax(dim=1)
             model_output_one_hot = torch.nn.functional.one_hot(labels, num_classes=hp.out_class+1).permute(0,4,1,2,3)
-            loss = criterion(outputs, y)
+
+
+            loss = criterion_ce(outputs, y.argmax(dim=1)) + criterion_dice(outputs, y.argmax(dim=1))
+
 
 
             # logits = torch.sigmoid(outputs)
