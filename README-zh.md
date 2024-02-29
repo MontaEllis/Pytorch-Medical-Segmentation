@@ -162,12 +162,6 @@ python main.py
 这个项目并不完美，还存在很多问题。如果您正在使用这个项目，并想给作者一些反馈，您可以给[我](elliszkn@163.com)发邮件。
 
 ## 致谢
-这个项目是一个非官方PyTorch实现的3D和2D医学分割，高度依赖于[MedicalZooPytorch](https://github.com/black0017/MedicalZooPytorch)和[torchio](https://github.com/fepegar/torchio)。感谢上述项目。本项目在[Prof. Ruoxiu Xiao](http://enscce.ustb.edu.cn/Teach/TeacherList/2020-10-16/114.html) 和 [Dr. Cheng Chen](b20170310@xs.ustb.edu.cn)的指导下完成。感谢[Youming Zhang](zhangym0820@csu.edu.cn), [Daiheng Gao](https://github.com/tomguluson92), [Jie Zhang](jpeter.zhang@connect.polyu.hk), [Xing Tao](kakatao@foxmail.com), [Weili Jiang](1379252229@qq.com)和[Shanshan Li](https://github.com/ssli23) 对我的帮助。
+这个项目是一个非官方PyTorch实现的3D和2D医学分割，高度依赖于[MedicalZooPytorch](https://github.com/black0017/MedicalZooPytorch)和[torchio](https://github.com/fepegar/torchio)。感谢上述项目。本项目在[Prof. Ruoxiu Xiao](http://enscce.ustb.edu.cn/Teach/TeacherList/2020-10-16/114.html), [Prof. Shuang Song](ssong@ustb.edu.cn) 和 [Dr. Cheng Chen](b20170310@xs.ustb.edu.cn)的指导下完成。感谢[Youming Zhang](zhangym0820@csu.edu.cn), [Daiheng Gao](https://github.com/tomguluson92), [Jie Zhang](jpeter.zhang@connect.polyu.hk), [Xing Tao](kakatao@foxmail.com), [Weili Jiang](1379252229@qq.com)和[Shanshan Li](https://github.com/ssli23) 对我的帮助。
 
 
-## 相关工作
-如果这些代码对您有帮助，您可以引用下列论文，谢谢。
-```
-[1] Chen C, Zhou K. An Effective Deep Neural Network for Lung Lesions Segmentation from COVID-19 CT Images[J]. IEEE Transactions on Industrial Informatics, 2021.
-[2] Chen C, Zhang T, et al. Pathological lung segmentation in chest CT images based on improved random walker[J]. Computer Methods and Programs in Biomedicine, 2021, 200: 105864.
-```
