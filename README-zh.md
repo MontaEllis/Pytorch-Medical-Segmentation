@@ -1,6 +1,10 @@
 # Pytorch Medical Segmentation
 <i>英文版请戳：<a href='https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/master/README.md'>这里！</a></i><br />
 
+# ❗️🚨 **重要提醒** 🚨❗️  
+# 🔗 **请务必改用我们的新仓库：[SLab-Medical-Segmentation](https://github.com/SLab-Medical/SLab-Medical-Segmentation)**  
+# 🛑 **现有仓库已被弃用！**
+
 ## Notes
 我们计划在最近对代码进行一次大更新，如果您有任何建议，请随意给[我](elliszkn@163.com)发邮件或者在issue里提。
 
