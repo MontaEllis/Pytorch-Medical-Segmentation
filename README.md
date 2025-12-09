@@ -1,6 +1,8 @@
 # Pytorch Medical Segmentation
 <i>Read Chinese Introduction：<a href='https://github.com/MontaEllis/Pytorch-Medical-Segmentation/blob/master/README-zh.md'>Here！</a></i><br />
 
+# <span style="color:red;">Please refer to our new [repo](https://github.com/SLab-Medical/SLab-Medical-Segmentation); the existing repo is deprecated.</span>
+
 ## Notes
 We are planning a major update to the code in the near future, so if you have any suggestions, please feel free to email [me](elliszkn@163.com) or mention them in the issue.
 
